@@ -1,0 +1,34 @@
+/**
+ * @font-face
+ */
+
+
+// Font Awesome
+// $fa-font-path: "assets/font/fontawesome";
+// @import "../../node_modules/font-awesome/scss/font-awesome";
+
+
+// Custom @font-face
+@font-face {
+	font-family: 'Nexa';
+	src: url('../fonts/Nexa-Light.eot');
+	src: local('☺'),
+	url('../fonts/Nexa-Light.woff') format('woff'),
+	url('../fonts/Nexa-Light.woff2') format('woff2'),
+	url('../fonts/Nexa-Light.ttf') format('truetype'),
+	url('../fonts/Nexa-Light.svg#webfont') format('svg');
+	font-weight: 300;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'Nexa';
+	src: url('../fonts/Nexa-Bold.eot');
+	src: local('☺'),
+	url('../fonts/Nexa-Bold.woff') format('woff'),
+	url('../fonts/Nexa-Bold.woff2') format('woff2'),
+	url('../fonts/Nexa-Bold.ttf') format('truetype'),
+	url('../fonts/Nexa-Bold.svg#webfont') format('svg');
+	font-weight: 700;
+	font-style: normal;
+}
