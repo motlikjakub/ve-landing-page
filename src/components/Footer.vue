@@ -61,6 +61,7 @@ export default {
     @media only screen and (min-width: $screen-md) {
       width: 50%;
       margin-bottom: 0;
+      text-align: left;
 	  }
   }
 

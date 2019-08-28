@@ -6,18 +6,18 @@
         Zadejte svoji adresu <br>
         a zjistěte, kolik vyrobíte energie.
       </h1>
-      <div class="address-form container">
+      <form class="address-form container">
         <div class="address-form__row">
-          <label for="input-address" class="address-form-input-label">Ulice a město</label>
+          <label for="address-input-address" class="address-form-input-label">Ulice a město</label>
         </div>
         <div class="address-form__row">
-          <input id="input-address" class="address-form-input" type="text" placeholder="Ulice a město">
-          <Button link="#grant" text="Spočítat"/>
+          <input id="address-input-address" class="address-form-input smartform-whole-address" type="text" placeholder="Ulice a město">
+          <Button link="#grant" classNames="checkbox-required" text="Spočítat"/>
         </div>
         <div class="address-form__row">
-          <input id="input-agree" class="address-form-checkbox" type="checkbox"><label for="input-agree" class="address-form-checkbox-label">Souhlasím se <a href="">zpracováním osobních údajů</a></label>
+          <input id="address-input-agree" class="address-form-checkbox" type="checkbox"><label for="address-input-agree" class="address-form-checkbox-label"><span>Souhlasím se <a href="">zpracováním osobních údajů</a></span></label>
         </div>
-      </div>
+      </form>
     </div>
   </section>
 </template>
@@ -137,6 +137,7 @@ export default {
       width: 560px;
       height: 60px;
       margin-right: 30px;
+      margin-bottom: 0;
 	  }
 
     @media only screen and (min-width: $screen-lg) {
@@ -150,11 +151,6 @@ export default {
     opacity: 0;
     width: 10px;
     margin-left: -10px;
-
-    // Box hover
-    &:hover + .address-form-checkbox-label::before {
-      background: $greenish;
-    }
 
     // Box checked
     &:checked + .address-form-checkbox-label::before {
@@ -194,6 +190,7 @@ export default {
 
   .address-form-checkbox-label {
     position: relative;
+    display: flex;
     cursor: pointer;
     padding: 0;
 
@@ -201,7 +198,7 @@ export default {
     font-family: $nexa;
     font-size: 14px;
     font-weight: 300;
-    line-height: 1;
+    line-height: 22px;
     letter-spacing: 0.56px;
 
     a {
@@ -214,10 +211,11 @@ export default {
 
     &::before {
       content: '';
+      display: block;
       margin-right: 10px;
-      display: inline-block;
       vertical-align: text-top;
       width: 20px;
+      min-width: 20px;
       height: 20px;
       background: white;
       border-radius: 4px;
@@ -225,4 +223,43 @@ export default {
     }
   }
 
+  @keyframes red-blink {
+    0% {
+      color: #fff;
+    }
+    50% {
+      color: #d63c1d;
+    }
+    100% {
+      color: #fff;
+    }
+  }
+
+</style>
+
+<style lang="scss">
+  @import "../scss/global";
+
+  .gwt-SuggestBoxPopup {
+    font-family: $nexa;
+    border-bottom-right-radius: 4px;
+    border-bottom-left-radius: 4px;
+    overflow: hidden;
+
+    .item.item-selected {
+      background: #8aedea;
+      cursor: pointer;
+    }
+
+    .suggestPopupContent {
+      border-bottom-left-radius: 4px;
+      border-bottom-right-radius: 4px;
+    }
+  }
+
+  .gwt-Anchor-suggestLink  {
+    //display: none;
+    color: $greenish;
+    font-size: 12px;
+  }
 </style>

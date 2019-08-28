@@ -6,6 +6,17 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <link rel="icon" href="<%= BASE_URL %>favicon.ico">
     <title>ve-landing-page</title>
+    
+    <script type="text/javascript" src="https://secure.smartform.cz/api/v1/smartform.js" async></script>
+    <script type="text/javascript">
+      var smartform = smartform || {};
+      smartform.beforeInit = function initialize() {
+        smartform.setClientId('fKXnrbHuZq');
+      }
+    </script>
+
+    <script src="https://api.mapy.cz/loader.js"></script>
+    <script>Loader.load()</script>
   </head>
   <body>
     <noscript>

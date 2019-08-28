@@ -39,7 +39,7 @@ export default {
   .icon-scroll {
     width: 22px;
     height: 40px;
-    margin-left: -20px;
+    margin-left: -11px;
     top: 50%;
     margin-top: -35px;
     border: 2px solid #fff;

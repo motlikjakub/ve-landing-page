@@ -45,12 +45,14 @@ export default {
     width: 93px;
     height: 48px;
     top: 54px;
+    margin-left: -47px;
 	}
 
   @media only screen and (min-width: $screen-lg) {
     width: 122px;
     height: 59px;
     top: 64px;
+    margin-left: -66px;
 	}
 }
 

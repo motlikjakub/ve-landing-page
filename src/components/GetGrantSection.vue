@@ -6,33 +6,33 @@
       <form class="get-grant-form" action="">
         <div class="get-grant-form__row">
           <div>
-            <label class="get-grant-form__label" for="grant-address">Adresa</label>
+            <label class="get-grant-form__label" for="get-grant-address">Adresa</label>
           </div>
           <div>
-            <input class="get-grant-form__input" id="grant-address" type="text">
+            <input class="get-grant-form__input" id="get-grant-address" type="text">
           </div>
           <div>
-            <a class="get-grant-form__link" href="">Zadat novou adresu</a>
-          </div>
-        </div>
-        <div class="get-grant-form__row">
-          <div>
-            <label class="get-grant-form__label" for="grant-email">E-mail</label>
-          </div>
-          <div>
-            <input class="get-grant-form__input" id="grant-email" type="email">
+            <a class="get-grant-form__link" href="#address" v-on:click="scroll('#address')">Zadat novou adresu</a>
           </div>
         </div>
         <div class="get-grant-form__row">
           <div>
-            <label class="get-grant-form__label" for="grant-text">Váš text</label>
+            <label class="get-grant-form__label" for="get-grant-email">E-mail</label>
           </div>
           <div>
-            <textarea class="get-grant-form__input get-grant-form__input--textarea" id="grant-text"></textarea>
+            <input class="get-grant-form__input" id="get-grant-email" type="email">
+          </div>
+        </div>
+        <div class="get-grant-form__row">
+          <div>
+            <label class="get-grant-form__label" for="get-grant-text">Váš text</label>
+          </div>
+          <div>
+            <textarea class="get-grant-form__input get-grant-form__input--textarea" id="get-grant-text"></textarea>
             <div class="get-grant-form-file">
-              <input class="get-grant-form-file__input" id="grant-file" type="file" accept="image, pdf">
+              <input class="get-grant-form-file__input" id="get-grant-file" type="file" accept="image, pdf">
               <div class="get-grant-form-file__half">
-                <label class="get-grant-form-file__label" for="grant-file">Vaše roční vyúčtovací faktura <br>za elektrickou energii</label>
+                <label class="get-grant-form-file__label" for="get-grant-file">Vaše roční vyúčtovací faktura <br>za elektrickou energii</label>
               </div>
               <div class="get-grant-form-file__half get-grant-form-file__half--with-button">
                 <div class="get-grant-form-file__button">
@@ -43,7 +43,7 @@
           </div>
         </div>
         <div class="get-grant-form__row get-grant-form__row--with-button">
-          <input id="grant-gdpr" class="get-grant-form-checkbox" type="checkbox"><label for="grant-gdpr" class="get-grant-form-checkbox-label"><span>Souhlasím se <a href="">zpracováním osobních údajů</a></span></label><Button text="Odeslat" smaller/>
+          <input id="grant-gdpr" class="get-grant-form-checkbox" type="checkbox"><label for="get-grant-gdpr" class="get-grant-form-checkbox-label"><span>Souhlasím se <a href="">zpracováním osobních údajů</a></span></label><Button text="Odeslat" classNames="greenish-button--smaller"/>
         </div>
       </form>
     </div>
@@ -52,12 +52,18 @@
 </template>
 
 <script>
-import Button from './Button'
+import Button from './Button';
+var VueScrollTo = require('vue-scrollto');
 
 export default {
   name: 'GetGrant',
   components: {
     Button
+  },
+  methods: {
+    scroll: function (link) {
+      VueScrollTo.scrollTo(link)
+    }
   }
 }
 </script>

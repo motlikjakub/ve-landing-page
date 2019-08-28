@@ -7,16 +7,15 @@
           <div class="grant-address-heading">
             Vaše adresa
           </div>
-          <div class="grant-address-content">
-            Modřínová 868/7 Třebíč, <br>
-            674 01 Česká republika
+          <div class="grant-address-content" id="grant-address">
+            
           </div>
           <div>
-            <a href="" class="grant-address-link">Zadat novou adresu</a>
+            <a href="#address" class="grant-address-link" v-on:click="scroll('#address')">Zadat novou adresu</a>
           </div>
         </div>
-        <div class="grant-address-map__half grant-map">
-          MAPKA
+        <div class="grant-address-map__half grant-map" id="mapa">
+          
         </div>
       </div>
       <div class="grant-details">
@@ -92,12 +91,18 @@
 </template>
 
 <script>
-import Button from './Button'
+import Button from './Button';
+var VueScrollTo = require('vue-scrollto');
 
 export default {
   name: 'GrantSection',
   components: {
     Button
+  },
+  methods: {
+    scroll: function (link) {
+      VueScrollTo.scrollTo(link)
+    }
   }
 }
 </script>
@@ -205,7 +210,6 @@ export default {
   }
 
   .grant-map {
-    background: orange;
     border-top-right-radius: 4px;
     border-bottom-right-radius: 4px;
   }
