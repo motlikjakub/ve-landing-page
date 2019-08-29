@@ -1,34 +1,53 @@
 <template>
-  <section class="address-section" id="address">
+  <div>
+    <section class="address-section" id="address">
     <img class="logo" alt="Vaše elektrárna logo" src="../assets/VE-logo.svg">
-    <div class="address-section__inner">
-      <h1 class="address-section-text">
-        Zadejte svoji adresu <br>
-        a zjistěte, kolik vyrobíte energie.
-      </h1>
-      <form class="address-form container">
-        <div class="address-form__row">
-          <label for="address-input-address" class="address-form-input-label">Ulice a město</label>
-        </div>
-        <div class="address-form__row">
-          <input id="address-input-address" class="address-form-input smartform-whole-address" type="text" placeholder="Ulice a město">
-          <Button link="#grant" classNames="checkbox-required" text="Spočítat"/>
-        </div>
-        <div class="address-form__row">
-          <input id="address-input-agree" class="address-form-checkbox" type="checkbox"><label for="address-input-agree" class="address-form-checkbox-label"><span>Souhlasím se <a href="">zpracováním osobních údajů</a></span></label>
-        </div>
-      </form>
-    </div>
-  </section>
+      <div class="address-section__inner">
+        <h1 class="address-section-text">
+          Zadejte svoji adresu <br>
+          a zjistěte, kolik vyrobíte energie.
+        </h1>
+        <form class="address-form container">
+          <div class="address-form__row">
+            <label for="address-input-address" class="address-form-input-label">Ulice a město</label>
+          </div>
+          <div class="address-form__row">
+            <input id="address-input-address" class="address-form-input smartform-whole-address" type="text" placeholder="Ulice a město" v-model="grant_address" @blur="passAddress">
+            <Button link="#grant" classNames="checkbox-required" text="Spočítat"/>
+          </div>
+          <div class="address-form__row">
+            <input id="address-input-agree" class="address-form-checkbox" type="checkbox" @change="passAddress"><label for="address-input-agree" class="address-form-checkbox-label"><span>Souhlasím se <a href="">zpracováním osobních údajů</a></span></label>
+          </div>
+        </form>
+      </div>
+    </section>
+    <GrantSection :lost_focus="lost_focus" :grant_address="grant_address"/>
+    <GetGrant/>
+  </div>
 </template>
 
 <script>
 import Button from './Button'
+import GrantSection from './GrantSection'
+import GetGrant from './GetGrantSection'
 
 export default {
   name: 'AddressSection',
   components: {
-    Button
+    Button,
+    GrantSection,
+    GetGrant,
+  },
+  data(){
+    return {
+      grant_address: "",
+      lost_focus: 0
+    }
+  },
+  methods: {
+    passAddress: function() {
+      this.lost_focus = this.lost_focus+1;
+    }
   }
 }
 </script>

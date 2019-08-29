@@ -3,8 +3,6 @@
     <img class="logo" alt="Vaše elektrárna logo" src="./assets/VE-logo.svg">
     <HeaderSwiper/>
     <AddressSection/>
-    <GrantSection/>
-    <GetGrant/>
     <Footer/>
   </div>
 </template>
@@ -12,17 +10,13 @@
 <script>
 import HeaderSwiper from './components/HeaderSwiper'
 import AddressSection from './components/AddressSection'
-import GrantSection from './components/GrantSection'
-import GetGrant from './components/GetGrantSection'
 import Footer from './components/Footer'
 
 export default {
   name: 'app',
   components: {
-    AddressSection,
     HeaderSwiper,
-    GrantSection,
-    GetGrant,
+    AddressSection,
     Footer
   }
 }

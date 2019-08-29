@@ -23,42 +23,9 @@ export default {
           alert('Je nutné souhlasit se zpracováním osobních údajů');
         } else {
           VueScrollTo.scrollTo(link);
-          let address = document.querySelector('#address-input-address').value;
-          this.loadmap(address);   
-          document.querySelector('#grant-address').innerHTML = address.replace(',', ', <br/>');
-          document.querySelector('#get-grant-address').value = address;
         }
       } else {
         VueScrollTo.scrollTo(link);
-      }
-    },
-    loadmap: function (address) {
-      new SMap.Geocoder(address, odpoved);
-
-      function odpoved(geocoder) { /* Odpověď */
-          if (!geocoder.getResults()[0].results.length) {
-              alert("Tuto adresu bohužel neznáme, prosíme kontaktujte nás.");
-              return;
-          }
-          
-          var vysledky = geocoder.getResults()[0].results;
-          var vysledek = vysledky[0];
-          console.log(vysledek);
-
-          var stred = SMap.Coords.fromWGS84(vysledek.coords.x, vysledek.coords.y);
-          var mapa = new SMap(JAK.gel("mapa"), stred, 16);
-          mapa.addDefaultLayer(SMap.DEF_BASE).enable();
-          mapa.addDefaultControls();
-
-          var layer = new SMap.Layer.Marker();
-          mapa.addLayer(layer);
-          layer.enable();
-
-          var markerIcon = require('../assets/marker.png')
-
-          var options = {url: markerIcon};
-          var marker = new SMap.Marker(stred, address, options);
-          layer.addMarker(marker);
       }
     }
   }

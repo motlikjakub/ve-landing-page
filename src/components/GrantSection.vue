@@ -7,9 +7,7 @@
           <div class="grant-address-heading">
             Vaše adresa
           </div>
-          <div class="grant-address-content" id="grant-address">
-            
-          </div>
+          <div class="grant-address-content" id="grant-address" v-html="breaked_address"></div>
           <div>
             <a href="#address" class="grant-address-link" v-on:click="scroll('#address')">Zadat novou adresu</a>
           </div>
@@ -99,9 +97,57 @@ export default {
   components: {
     Button
   },
+  props: {
+    lost_focus: Number,
+    grant_address: String
+  },
+  computed: {
+    breaked_address: function() {
+      return this.grant_address.replace(',', ', <br/>');
+    }
+  },
   methods: {
     scroll: function (link) {
       VueScrollTo.scrollTo(link)
+    },
+    loadmap: function (address) {
+      new SMap.Geocoder(address, odpoved);
+
+      function odpoved(geocoder) { /* Odpověď */
+          if (!geocoder.getResults()[0].results.length) {
+              alert("Tuto adresu bohužel neznáme, prosíme kontaktujte nás.");
+              return;
+          }
+          
+          var vysledky = geocoder.getResults()[0].results;
+          var vysledek = vysledky[0];
+          console.log(vysledek);
+
+          var stred = SMap.Coords.fromWGS84(vysledek.coords.x, vysledek.coords.y);
+          var mapa = new SMap(JAK.gel("mapa"), stred, 16);
+          mapa.addDefaultLayer(SMap.DEF_BASE).enable();
+          mapa.addDefaultControls();
+
+          var layer = new SMap.Layer.Marker();
+          mapa.addLayer(layer);
+          layer.enable();
+
+          var markerIcon = require('../assets/marker.png')
+
+          var options = {url: markerIcon};
+          var marker = new SMap.Marker(stred, address, options);
+          layer.addMarker(marker);
+      }
+    }
+  },
+  watch: {
+    lost_focus: function () {
+      alert("lost");
+      if (!document.querySelector('#address-input-agree:checked')) {
+          alert('Je nutné souhlasit se zpracováním osobních údajů');
+        } else {
+          this.loadmap(this.grant_address);
+        }
     }
   }
 }

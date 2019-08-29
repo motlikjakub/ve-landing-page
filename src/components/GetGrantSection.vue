@@ -43,7 +43,7 @@
           </div>
         </div>
         <div class="get-grant-form__row get-grant-form__row--with-button">
-          <input id="grant-gdpr" class="get-grant-form-checkbox" type="checkbox"><label for="get-grant-gdpr" class="get-grant-form-checkbox-label"><span>Souhlasím se <a href="">zpracováním osobních údajů</a></span></label><Button text="Odeslat" classNames="greenish-button--smaller"/>
+          <input id="get-grant-gdpr" class="get-grant-form-checkbox" type="checkbox"><label for="get-grant-gdpr" class="get-grant-form-checkbox-label"><span>Souhlasím se <a href="">zpracováním osobních údajů</a></span></label><Button text="Odeslat" classNames="greenish-button--smaller"/>
         </div>
       </form>
     </div>
@@ -244,6 +244,7 @@ export default {
 
     @media only screen and (min-width: $screen-md) {
       width: 50%;
+      margin-bottom: 0;
 	  }
 
     &--with-button {
