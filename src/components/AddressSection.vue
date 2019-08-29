@@ -12,16 +12,16 @@
             <label for="address-input-address" class="address-form-input-label">Ulice a město</label>
           </div>
           <div class="address-form__row">
-            <input id="address-input-address" class="address-form-input smartform-whole-address" type="text" placeholder="Ulice a město" v-model="grant_address" @blur="passAddress">
-            <Button link="#grant" classNames="checkbox-required" text="Spočítat"/>
+            <input id="address-input-address" class="address-form-input smartform-whole-address" type="text" placeholder="Ulice a město">
+            <Button link="#grant" classNames="checkbox-required" text="Spočítat" @click.native="passAddress"/>
           </div>
           <div class="address-form__row">
-            <input id="address-input-agree" class="address-form-checkbox" type="checkbox" @change="passAddress"><label for="address-input-agree" class="address-form-checkbox-label"><span>Souhlasím se <a href="">zpracováním osobních údajů</a></span></label>
+            <input id="address-input-agree" class="address-form-checkbox" type="checkbox" v-model="gdpr_accepted" @change="passAddress"><label for="address-input-agree" class="address-form-checkbox-label"><span>Souhlasím se <a href="">zpracováním osobních údajů</a></span></label>
           </div>
         </form>
       </div>
     </section>
-    <GrantSection :lost_focus="lost_focus" :grant_address="grant_address"/>
+    <GrantSection :grant_address="grant_address"/>
     <GetGrant/>
   </div>
 </template>
@@ -40,13 +40,18 @@ export default {
   },
   data(){
     return {
+      input_address: "",
       grant_address: "",
-      lost_focus: 0
+      gdpr_accepted: false
     }
   },
   methods: {
     passAddress: function() {
-      this.lost_focus = this.lost_focus+1;
+        if (this.gdpr_accepted === false) {
+          alert('Je nutné souhlasit se zpracováním osobních údajů');
+        } else {
+          this.grant_address = document.getElementById('address-input-address').value;
+        }
     }
   }
 }

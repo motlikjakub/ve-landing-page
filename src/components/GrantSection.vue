@@ -98,7 +98,6 @@ export default {
     Button
   },
   props: {
-    lost_focus: Number,
     grant_address: String
   },
   computed: {
@@ -141,13 +140,8 @@ export default {
     }
   },
   watch: {
-    lost_focus: function () {
-      alert("lost");
-      if (!document.querySelector('#address-input-agree:checked')) {
-          alert('Je nutné souhlasit se zpracováním osobních údajů');
-        } else {
-          this.loadmap(this.grant_address);
-        }
+    grant_address: function () {
+      this.loadmap(this.grant_address);
     }
   }
 }
