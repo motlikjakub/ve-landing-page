@@ -90,7 +90,7 @@
 
 <script>
 import Button from './Button';
-var VueScrollTo = require('vue-scrollto');
+let VueScrollTo = require('vue-scrollto');
 
 export default {
   name: 'GrantSection',
@@ -110,17 +110,18 @@ export default {
       VueScrollTo.scrollTo(link)
     },
     loadmap: function (address) {
+      document.getElementById('mapa').innerHTML = '';
+
       new SMap.Geocoder(address, odpoved);
 
       function odpoved(geocoder) { /* Odpověď */
           if (!geocoder.getResults()[0].results.length) {
-              alert("Tuto adresu bohužel neznáme, prosíme kontaktujte nás.");
+              alert("Tuto adresu bohužel neznáme, pro více informací nás prosím kontaktujte nás.");
               return;
           }
           
           var vysledky = geocoder.getResults()[0].results;
           var vysledek = vysledky[0];
-          console.log(vysledek);
 
           var stred = SMap.Coords.fromWGS84(vysledek.coords.x, vysledek.coords.y);
           var mapa = new SMap(JAK.gel("mapa"), stred, 16);
@@ -132,7 +133,6 @@ export default {
           layer.enable();
 
           var markerIcon = require('../assets/marker.png')
-
           var options = {url: markerIcon};
           var marker = new SMap.Marker(stred, address, options);
           layer.addMarker(marker);
