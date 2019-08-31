@@ -90,6 +90,7 @@
 
 <script>
 import Button from './Button';
+import axios from 'axios';
 let VueScrollTo = require('vue-scrollto');
 
 export default {
@@ -109,8 +110,9 @@ export default {
     scroll: function (link) {
       VueScrollTo.scrollTo(link)
     },
-    loadmap: function (address) {
+    handleGrantData: function (address) {
       document.getElementById('mapa').innerHTML = '';
+      var coords;
 
       new SMap.Geocoder(address, odpoved);
 
@@ -122,6 +124,7 @@ export default {
           
           var vysledky = geocoder.getResults()[0].results;
           var vysledek = vysledky[0];
+          loadGrantData(vysledek.coords);
 
           var stred = SMap.Coords.fromWGS84(vysledek.coords.x, vysledek.coords.y);
           var mapa = new SMap(JAK.gel("mapa"), stred, 16);
@@ -137,11 +140,28 @@ export default {
           var marker = new SMap.Marker(stred, address, options);
           layer.addMarker(marker);
       }
-    }
+
+      function loadGrantData (coords) {
+        console.log(coords);
+        axios.post('https://vaseelektrarna.adwell.cz/api/pvgis/vase-elektrarna',{ 
+          params: { 
+            latitude: coords.x,
+            longtitude: coords.y
+          }
+        })
+        .then(response => {
+          console.log(response.data);
+        })
+        .catch(error => {
+          console.log(e);
+        });
+      }
+    },
   },
   watch: {
+    // When component gets grant_address do the magic
     grant_address: function () {
-      this.loadmap(this.grant_address);
+      this.handleGrantData(this.grant_address);
     }
   }
 }
@@ -250,8 +270,15 @@ export default {
   }
 
   .grant-map {
-    border-top-right-radius: 4px;
+    border-bottom-left-radius: 4px;
     border-bottom-right-radius: 4px;
+    min-height: 250px;
+
+    @media only screen and (min-width: $screen-md) {
+      min-height: 210px;
+      border-top-right-radius: 4px;
+      border-bottom-right-radius: 4px;
+    }
   }
 
   .grant-details {

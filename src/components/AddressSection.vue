@@ -22,7 +22,7 @@
       </div>
     </section>
     <GrantSection :grant_address="grant_address"/>
-    <GetGrant/>
+    <GetGrant :grant_address="grant_address"/>
   </div>
 </template>
 

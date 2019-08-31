@@ -9,7 +9,7 @@
             <label class="get-grant-form__label" for="get-grant-address">Adresa</label>
           </div>
           <div>
-            <input class="get-grant-form__input" id="get-grant-address" type="text">
+            <input class="get-grant-form__input" id="get-grant-address" type="text" v-model="grant_address" disabled>
           </div>
           <div>
             <a class="get-grant-form__link" href="#address" v-on:click="scroll('#address')">Zadat novou adresu</a>
@@ -57,6 +57,9 @@ var VueScrollTo = require('vue-scrollto');
 
 export default {
   name: 'GetGrant',
+  props: {
+    grant_address: String
+  },
   components: {
     Button
   },
