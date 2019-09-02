@@ -13,7 +13,7 @@
           </div>
         </div>
         <div class="grant-address-map__half grant-map" id="mapa">
-          
+
         </div>
       </div>
       <div class="grant-details">
@@ -31,11 +31,11 @@
           </div>
           <div class="grant-detail__row">
             <h2 class="grant-detail__heading">Roční výroba a úspora</h2>
-            <p class="grant-detail__content">1.750 kWh</p>
+            <p class="grant-detail__content">{{ smallestGrantProduction }} kWh</p>
           </div>
           <div class="grant-detail__row">
             <h2 class="grant-detail__heading">Úspora CO<sub>2</sub></h2>
-            <p class="grant-detail__content">2.143 kg</p>
+            <p class="grant-detail__content">{{ smallestGrantEcoSavings }} kg</p>
           </div>
         </article>
         <article class="grant-detail">
@@ -52,11 +52,11 @@
           </div>
           <div class="grant-detail__row">
             <h2 class="grant-detail__heading">Roční výroba a úspora</h2>
-            <p class="grant-detail__content">3.230 kWh</p>
+            <p class="grant-detail__content">{{ mediumGrantProduction }} kWh</p>
           </div>
           <div class="grant-detail__row">
             <h2 class="grant-detail__heading">Úspora CO<sub>2</sub></h2>
-            <p class="grant-detail__content">3.792 kg</p>
+            <p class="grant-detail__content">{{ mediumGrantEcoSavings }} kg</p>
           </div>
         </article>
         <article class="grant-detail">
@@ -64,7 +64,7 @@
             <img class="grant-detail__nzu" src="../assets/nzu.png" alt="Nová Zelená Úsporám">
           </div>
           <div class="grant-detail__row">
-            <h1 class="grant-detail__heading">Dotační titul NZÚ C.3.4.</h1>
+            <h1 class="grant-detail__heading">Dotační titul NZÚ C.3.6.</h1>
             <p class="grant-detail__description">14 panelů, Lithiová baterie 5,72 kWh</p>
           </div>
           <div class="grant-detail__row">
@@ -73,11 +73,11 @@
           </div>
           <div class="grant-detail__row">
             <h2 class="grant-detail__heading">Roční výroba a úspora</h2>
-            <p class="grant-detail__content">4.850 kWh</p>
+            <p class="grant-detail__content">{{ largestGrantProduction }} kWh</p>
           </div>
           <div class="grant-detail__row">
             <h2 class="grant-detail__heading">Úspora CO<sub>2</sub></h2>
-            <p class="grant-detail__content">5.675 kWh</p>
+            <p class="grant-detail__content">{{ largestGrantEcoSavings }} kWh</p>
           </div>
         </article>
       </div>
@@ -89,21 +89,31 @@
 </template>
 
 <script>
-import Button from './Button';
-import axios from 'axios';
-let VueScrollTo = require('vue-scrollto');
+import Button from './Button'
+import axios from 'axios'
+let VueScrollTo = require('vue-scrollto')
 
 export default {
   name: 'GrantSection',
   components: {
     Button
   },
+  data () {
+    return {
+      smallestGrantProduction: 0,
+      smallestGrantEcoSavings: 0,
+      mediumGrantProduction: 0,
+      mediumGrantEcoSavings: 0,
+      largestGrantProduction: 0,
+      largestGrantEcoSavings: 0,
+    }
+  },
   props: {
     grant_address: String
   },
   computed: {
-    breaked_address: function() {
-      return this.grant_address.replace(',', ', <br/>');
+    breaked_address: function () {
+      return this.grant_address.replace(',', ', <br/>')
     }
   },
   methods: {
@@ -111,57 +121,68 @@ export default {
       VueScrollTo.scrollTo(link)
     },
     handleGrantData: function (address) {
+      let selfThis = this;
+
       document.getElementById('mapa').innerHTML = '';
       var coords;
 
       new SMap.Geocoder(address, odpoved);
 
-      function odpoved(geocoder) { /* Odpověď */
-          if (!geocoder.getResults()[0].results.length) {
-              alert("Tuto adresu bohužel neznáme, pro více informací nás prosím kontaktujte nás.");
-              return;
-          }
-          
-          var vysledky = geocoder.getResults()[0].results;
-          var vysledek = vysledky[0];
-          loadGrantData(vysledek.coords);
+      function odpoved (geocoder) { /* Odpověď */
+        if (!geocoder.getResults()[0].results.length) {
+          alert('Tuto adresu bohužel neznáme, pro více informací nás kontaktujte nás.');
+          return
+        }
 
-          var stred = SMap.Coords.fromWGS84(vysledek.coords.x, vysledek.coords.y);
-          var mapa = new SMap(JAK.gel("mapa"), stred, 16);
-          mapa.addDefaultLayer(SMap.DEF_BASE).enable();
-          mapa.addDefaultControls();
+        var vysledky = geocoder.getResults()[0].results
+        var vysledek = vysledky[0]
+        loadGrantData(vysledek.coords)
 
-          var layer = new SMap.Layer.Marker();
-          mapa.addLayer(layer);
-          layer.enable();
+        var stred = SMap.Coords.fromWGS84(vysledek.coords.x, vysledek.coords.y)
+        var mapa = new SMap(JAK.gel('mapa'), stred, 16)
+        mapa.addDefaultLayer(SMap.DEF_BASE).enable()
+        mapa.addDefaultControls()
 
-          var markerIcon = require('../assets/marker.png')
-          var options = {url: markerIcon};
-          var marker = new SMap.Marker(stred, address, options);
-          layer.addMarker(marker);
+        var layer = new SMap.Layer.Marker()
+        mapa.addLayer(layer)
+        layer.enable()
+
+        var markerIcon = require('../assets/marker.png')
+        var options = { url: markerIcon }
+        var marker = new SMap.Marker(stred, address, options)
+        layer.addMarker(marker)
       }
 
       function loadGrantData (coords) {
-        console.log(coords);
-        axios.post('https://vaseelektrarna.adwell.cz/api/pvgis/vase-elektrarna',{ 
-          params: { 
+        axios.post('https://vaseelektrarna.adwell.cz/api/pvgis/vase-elektrarna', {
+          params: {
             latitude: coords.x,
             longtitude: coords.y
           }
-        })
-        .then(response => {
-          console.log(response.data);
-        })
-        .catch(error => {
-          console.log(e);
-        });
+          })
+          .then(response => {
+            fillData(response.data);
+          })
+          .catch(error => {
+            console.log(error)
+            alert('Při získávání dat ze serveru nastala chyba, zkuste to znovu později.')
+          })
       }
-    },
+
+      function fillData (data) {
+        selfThis.smallestGrantProduction = data[0]['production'];
+        selfThis.smallestGrantEcoSavings = data[0]['eco-savings'];
+        selfThis.mediumGrantProduction = data[1]['production'];
+        selfThis.mediumGrantEcoSavings = data[1]['eco-savings'];
+        selfThis.largestGrantProduction = data[2]['production'];
+        selfThis.largestGrantEcoSavings = data[2]['eco-savings'];
+      }
+    }
   },
   watch: {
     // When component gets grant_address do the magic
     grant_address: function () {
-      this.handleGrantData(this.grant_address);
+      this.handleGrantData(this.grant_address)
     }
   }
 }
@@ -184,7 +205,7 @@ export default {
       padding-top: 70px;
       padding-bottom: 70px;
     }
-    
+
     @media only screen and (min-width: $screen-lg) {
       padding-top: 120px;
       padding-bottom: 100px;
@@ -348,7 +369,7 @@ export default {
     font-weight: 700;
     letter-spacing: 0.56px;
     line-height: 40px;
-    
+
     @media only screen and (min-width: $screen-md) {
       margin-top: 10px;
     }

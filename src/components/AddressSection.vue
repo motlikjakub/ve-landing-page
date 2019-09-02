@@ -36,22 +36,22 @@ export default {
   components: {
     Button,
     GrantSection,
-    GetGrant,
+    GetGrant
   },
-  data(){
+  data () {
     return {
-      input_address: "",
-      grant_address: "",
+      input_address: '',
+      grant_address: '',
       gdpr_accepted: false
     }
   },
   methods: {
-    passAddress: function() {
-        if (this.gdpr_accepted === false) {
-          alert('Je nutné souhlasit se zpracováním osobních údajů');
-        } else {
-          this.grant_address = document.getElementById('address-input-address').value;
-        }
+    passAddress: function () {
+      if (this.gdpr_accepted === false) {
+        alert('Je nutné souhlasit se zpracováním osobních údajů')
+      } else {
+        this.grant_address = document.getElementById('address-input-address').value
+      }
     }
   }
 }

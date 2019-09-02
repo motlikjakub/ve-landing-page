@@ -6,7 +6,7 @@
 </template>
 
 <script>
-var VueScrollTo = require('vue-scrollto');
+var VueScrollTo = require('vue-scrollto')
 
 export default {
   name: 'Button',
@@ -17,15 +17,15 @@ export default {
   },
   methods: {
     click: function (link) {
-      event.preventDefault();
+      event.preventDefault()
       if (event.target.classList.contains('checkbox-required')) {
         if (!document.querySelector('#address-input-agree:checked')) {
-          alert('Je nutné souhlasit se zpracováním osobních údajů');
+          alert('Je nutné souhlasit se zpracováním osobních údajů')
         } else {
-          VueScrollTo.scrollTo(link);
+          VueScrollTo.scrollTo(link)
         }
       } else {
-        VueScrollTo.scrollTo(link);
+        VueScrollTo.scrollTo(link)
       }
     }
   }

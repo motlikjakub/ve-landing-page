@@ -5,7 +5,7 @@
 </template>
 
 <script>
-var VueScrollTo = require('vue-scrollto');
+var VueScrollTo = require('vue-scrollto')
 
 export default {
   name: 'ScrollDown',

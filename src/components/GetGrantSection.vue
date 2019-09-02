@@ -52,8 +52,8 @@
 </template>
 
 <script>
-import Button from './Button';
-var VueScrollTo = require('vue-scrollto');
+import Button from './Button'
+var VueScrollTo = require('vue-scrollto')
 
 export default {
   name: 'GetGrant',
@@ -89,7 +89,7 @@ export default {
     @media only screen and (min-width: $screen-md) {
       display: block;
 	  }
-    
+
     &--top {
       background: url("../assets/dots-top.svg");
       background-repeat: repeat-x;
