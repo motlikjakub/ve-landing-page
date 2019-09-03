@@ -96,10 +96,44 @@ export default {
   @import "~swiper/src/swiper";
   @import "../scss/global";
 
+  $animation-settings: 4s infinite;
+
+  @keyframes zoom-bottom-left-top-right {
+    from {
+      background-position: bottom left;
+      background-size: auto 100%;
+    }
+    to {
+      background-position: top right;
+      background-size: auto 120%;
+    }
+  }
+
+  @keyframes zoom-top-left-bottom-right {
+    from {
+      background-position: top left;
+      background-size: auto 100%;
+    }
+    to {
+      background-position: bottom right;
+      background-size: auto 120%;
+    }
+  }
+
+  @keyframes zoom-top-right-bottom-left {
+    from {
+      background-position: top right;
+      background-size: auto 100%;
+    }
+    to {
+      background-position: bottom left;
+      background-size: auto 120%;
+    }
+  }
+
   @mixin slide-background {
     background-color: #ccc;
-    background-position: center;
-    background-size: cover;
+    background-size: auto 100%;
     background-repeat: no-repeat;
   }
 
@@ -133,21 +167,25 @@ export default {
       background: url("../assets/slides/ve1.jpg");
       @include slide-background;
       // @include slide-darken;
+      animation: zoom-bottom-left-top-right $animation-settings;
     }
 
     &.slide-2 {
       background: url("../assets/slides/ve2.jpg");
       @include slide-background;
+      animation: zoom-top-left-bottom-right $animation-settings;
     }
 
     &.slide-3 {
       background: url("../assets/slides/ve3.jpg");
       @include slide-background;
+      animation: zoom-top-right-bottom-left $animation-settings;
     }
 
     &.slide-4 {
       background: url("../assets/slides/ve4.jpg");
       @include slide-background;
+      animation: zoom-top-left-bottom-right $animation-settings;
     }
   }
 
