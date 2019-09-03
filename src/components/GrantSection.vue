@@ -31,11 +31,11 @@
           </div>
           <div class="grant-detail__row">
             <h2 class="grant-detail__heading">Roční výroba a úspora</h2>
-            <p class="grant-detail__content">{{ smallestGrantProduction }} kWh</p>
+            <p class="grant-detail__content">{{ formatNumber(smallestGrantProduction) }} kWh</p>
           </div>
           <div class="grant-detail__row">
             <h2 class="grant-detail__heading">Úspora CO<sub>2</sub></h2>
-            <p class="grant-detail__content">{{ smallestGrantEcoSavings }} kg</p>
+            <p class="grant-detail__content">{{ formatNumber(smallestGrantEcoSavings) }} kg</p>
           </div>
         </article>
         <article class="grant-detail">
@@ -52,11 +52,11 @@
           </div>
           <div class="grant-detail__row">
             <h2 class="grant-detail__heading">Roční výroba a úspora</h2>
-            <p class="grant-detail__content">{{ mediumGrantProduction }} kWh</p>
+            <p class="grant-detail__content">{{ formatNumber(mediumGrantProduction) }} kWh</p>
           </div>
           <div class="grant-detail__row">
             <h2 class="grant-detail__heading">Úspora CO<sub>2</sub></h2>
-            <p class="grant-detail__content">{{ mediumGrantEcoSavings }} kg</p>
+            <p class="grant-detail__content">{{ formatNumber(mediumGrantEcoSavings) }} kg</p>
           </div>
         </article>
         <article class="grant-detail">
@@ -73,11 +73,11 @@
           </div>
           <div class="grant-detail__row">
             <h2 class="grant-detail__heading">Roční výroba a úspora</h2>
-            <p class="grant-detail__content">{{ largestGrantProduction }} kWh</p>
+            <p class="grant-detail__content">{{ formatNumber(largestGrantProduction) }} kWh</p>
           </div>
           <div class="grant-detail__row">
             <h2 class="grant-detail__heading">Úspora CO<sub>2</sub></h2>
-            <p class="grant-detail__content">{{ largestGrantEcoSavings }} kWh</p>
+            <p class="grant-detail__content">{{ formatNumber(largestGrantEcoSavings) }} kWh</p>
           </div>
         </article>
       </div>
@@ -119,6 +119,9 @@ export default {
   methods: {
     scroll: function (link) {
       VueScrollTo.scrollTo(link)
+    },
+    formatNumber: function (number) {
+      return number.toLocaleString('it-IT');
     },
     handleGrantData: function (address) {
       let selfThis = this;
