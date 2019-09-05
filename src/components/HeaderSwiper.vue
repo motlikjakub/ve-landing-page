@@ -6,6 +6,7 @@
       <div class="swiper-wrapper">
         <!-- Slides -->
         <div class="swiper-slide slide-1">
+          <div class="swiper-slide-bcg"></div>
           <div class="swiper-slide-inner">
             <div class="swiper-slide-text">
               Chraňte naši Zemi, <br>
@@ -17,6 +18,7 @@
           </div>
         </div>
         <div class="swiper-slide slide-2">
+          <div class="swiper-slide-bcg"></div>
           <div class="swiper-slide-inner">
             <div class="swiper-slide-text">
               Budoucnost našich dětí, <br>
@@ -28,6 +30,7 @@
           </div>
         </div>
         <div class="swiper-slide slide-3">
+          <div class="swiper-slide-bcg"></div>
           <div class="swiper-slide-inner">
             <div class="swiper-slide-text">
               Buďte nezávislí <br>
@@ -39,6 +42,7 @@
           </div>
         </div>
         <div class="swiper-slide slide-4">
+          <div class="swiper-slide-bcg"></div>
           <div class="swiper-slide-inner">
             <div class="swiper-slide-text">
               Vyrobte si svoji vlastní <br>
@@ -96,45 +100,14 @@ export default {
   @import "~swiper/src/swiper";
   @import "../scss/global";
 
-  $animation-settings: 4s infinite;
-
-  @keyframes zoom-bottom-left-top-right {
-    from {
-      background-position: bottom left;
-      background-size: auto 100%;
-    }
-    to {
-      background-position: top right;
-      background-size: auto 120%;
-    }
-  }
-
-  @keyframes zoom-top-left-bottom-right {
-    from {
-      background-position: top left;
-      background-size: auto 100%;
-    }
-    to {
-      background-position: bottom right;
-      background-size: auto 120%;
-    }
-  }
-
-  @keyframes zoom-top-right-bottom-left {
-    from {
-      background-position: top right;
-      background-size: auto 100%;
-    }
-    to {
-      background-position: bottom left;
-      background-size: auto 120%;
-    }
-  }
+  $slide-zoom-speed: 8s;
+  $slide-zoom-size: 1.5;
 
   @mixin slide-background {
     background-color: #ccc;
     background-size: auto 100%;
     background-repeat: no-repeat;
+    background-position: center;
   }
 
   @mixin slide-darken {
@@ -156,37 +129,57 @@ export default {
     position: relative;
   }
 
+  .swiper-slide-active {
+    .swiper-slide-bcg {
+      transform: scale($slide-zoom-size);
+    }
+  }
+
   .swiper-slide {
+    position: relative;
     min-height: 100vh;
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
+    overflow: hidden;
 
     &.slide-1 {
-      background: url("../assets/slides/ve1.jpg");
-      @include slide-background;
-      // @include slide-darken;
-      animation: zoom-bottom-left-top-right $animation-settings;
+      .swiper-slide-bcg {
+        background: url("../assets/slides/ve1.jpg");
+        @include slide-background;
+      }
     }
 
     &.slide-2 {
-      background: url("../assets/slides/ve2.jpg");
-      @include slide-background;
-      animation: zoom-top-left-bottom-right $animation-settings;
+      .swiper-slide-bcg {
+        background: url("../assets/slides/ve2.jpg");
+        @include slide-background;
+      }
     }
 
     &.slide-3 {
-      background: url("../assets/slides/ve3.jpg");
-      @include slide-background;
-      animation: zoom-top-right-bottom-left $animation-settings;
+      .swiper-slide-bcg {
+        background: url("../assets/slides/ve3.jpg");
+        @include slide-background;
+      }
     }
 
     &.slide-4 {
-      background: url("../assets/slides/ve4.jpg");
-      @include slide-background;
-      animation: zoom-top-left-bottom-right $animation-settings;
+      .swiper-slide-bcg {
+        background: url("../assets/slides/ve4.jpg");
+        @include slide-background;
+      }
     }
+  }
+
+  .swiper-slide-bcg {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    transition: $slide-zoom-speed;
   }
 
   .swiper-slide-inner {
