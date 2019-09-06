@@ -84,7 +84,7 @@ export default {
     const swiper = new Swiper('.swiper-container', {
       speed: 1000,
       autoplay: {
-        delay: 3000
+        delay: 5000
       },
       pagination: {
         el: '.swiper-pagination',
@@ -100,8 +100,8 @@ export default {
   @import "~swiper/src/swiper";
   @import "../scss/global";
 
-  $slide-zoom-speed: 8s;
-  $slide-zoom-size: 1.3;
+  $slide-zoom-speed: 10s;
+  $slide-zoom-size: 1.15;
 
   @mixin slide-background {
     background-color: #ccc;
@@ -179,7 +179,7 @@ export default {
     top: 0;
     width: 100%;
     height: 100%;
-    transition: $slide-zoom-speed;
+    transition: $slide-zoom-speed linear;
   }
 
   .swiper-slide-inner {
