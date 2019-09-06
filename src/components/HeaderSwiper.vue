@@ -105,7 +105,7 @@ export default {
 
   @mixin slide-background {
     background-color: #ccc;
-    background-size: auto 100%;
+    background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
   }
