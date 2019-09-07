@@ -84,7 +84,7 @@ export default {
     const swiper = new Swiper('.swiper-container', {
       speed: 1000,
       autoplay: {
-        delay: 3000
+        delay: 5000
       },
       pagination: {
         el: '.swiper-pagination',
@@ -100,12 +100,12 @@ export default {
   @import "~swiper/src/swiper";
   @import "../scss/global";
 
-  $slide-zoom-speed: 8s;
-  $slide-zoom-size: 1.5;
+  $slide-zoom-speed: 10s;
+  $slide-zoom-size: 1.15;
 
   @mixin slide-background {
     background-color: #ccc;
-    background-size: auto 100%;
+    background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
   }
@@ -142,7 +142,6 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
-    overflow: hidden;
 
     &.slide-1 {
       .swiper-slide-bcg {
@@ -179,7 +178,7 @@ export default {
     top: 0;
     width: 100%;
     height: 100%;
-    transition: $slide-zoom-speed;
+    transition: $slide-zoom-speed linear;
   }
 
   .swiper-slide-inner {
