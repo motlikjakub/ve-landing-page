@@ -185,6 +185,7 @@ export default {
     position: relative;
     z-index: 2;
     text-align: center;
+    margin: 100px 0;
   }
 
   .swiper-slide-text {

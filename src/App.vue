@@ -55,5 +55,15 @@ export default {
   // -webkit-font-smoothing: antialiased;
   // -moz-osx-font-smoothing: grayscale;
   position: relative;
+
+  input, textarea {
+    -webkit-appearance: none;
+
+    &:disabled {
+      -webkit-appearance: none;
+      background: #fff;
+      opacity: .7;
+    }
+  }
 }
 </style>

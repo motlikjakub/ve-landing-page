@@ -16,7 +16,7 @@
             <Button link="#grant" classNames="checkbox-required" text="Spočítat" @click.native="passAddress"/>
           </div>
           <div class="address-form__row">
-            <input id="address-input-agree" class="address-form-checkbox" type="checkbox" v-model="gdpr_accepted" @change="passAddress"><label for="address-input-agree" class="address-form-checkbox-label"><span>Souhlasím se <a href="">zpracováním osobních údajů</a></span></label>
+            <input id="address-input-agree" class="address-form-checkbox" type="checkbox" v-model="gdpr_accepted" @change="passAddress"><label for="address-input-agree" class="address-form-checkbox-label"><span>Souhlasím se <a href="https://ve.solar/osobni-udaje" target="_blank">zpracováním osobních údajů</a></span></label>
           </div>
         </form>
       </div>
@@ -169,6 +169,10 @@ export default {
       height: 70px;
       width: 600px;
 	  }
+
+    &::placeholder {
+      line-height: 1.5;
+    }
   }
 
   .address-form-checkbox {
