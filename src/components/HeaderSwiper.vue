@@ -142,7 +142,6 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
-    overflow: hidden;
 
     &.slide-1 {
       .swiper-slide-bcg {
