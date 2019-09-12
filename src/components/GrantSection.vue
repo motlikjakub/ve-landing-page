@@ -157,10 +157,11 @@ export default {
       }
 
       function loadGrantData (coords) {
+        console.log(coords);
         axios.post('https://vesolar.adwell.cz/api/pvgis/vase-elektrarna', {
           params: {
             latitude: coords.x,
-            longtitude: coords.y
+            longitude: coords.y
           }
           })
           .then(response => {
