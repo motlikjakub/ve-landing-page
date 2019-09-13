@@ -133,7 +133,7 @@ export default {
 
       function odpoved (geocoder) { /* Odpověď */
         if (!geocoder.getResults()[0].results.length) {
-          alert('Tuto adresu bohužel neznáme, pro více informací nás kontaktujte nás.');
+          alert('Tuto adresu bohužel neznáme, pro více informací nás kontaktujte.');
           return
         }
 
@@ -158,12 +158,12 @@ export default {
 
       function loadGrantData (coords) {
         console.log(coords);
-        axios.post('https://vesolar.adwell.cz/api/pvgis/vase-elektrarna', {
-          params: {
-            latitude: coords.y,
-            longitude: coords.x
-          }
-          })
+        
+        const formData = new FormData();
+        formData.append('latitude', coords.y);
+        formData.append('longitude', coords.x);
+
+        axios.post('https://vesolar.adwell.cz/api/pvgis/vase-elektrarna', formData)
           .then(response => {
             fillData(response.data);
           })
