@@ -142,8 +142,8 @@ export default {
         loadGrantData(vysledek.coords)
 
         var stred = SMap.Coords.fromWGS84(vysledek.coords.x, vysledek.coords.y)
-        var mapa = new SMap(JAK.gel('mapa'), stred, 16)
-        mapa.addDefaultLayer(SMap.DEF_BASE).enable()
+        var mapa = new SMap(JAK.gel('mapa'), stred, 19)
+        mapa.addDefaultLayer(SMap.DEF_SMART_OPHOTO).enable()
         mapa.addDefaultControls()
 
         var layer = new SMap.Layer.Marker()
