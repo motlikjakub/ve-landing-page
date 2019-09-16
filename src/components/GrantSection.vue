@@ -1,8 +1,8 @@
 <template>
-  <section class="grant-section" id="grant">
+  <section class="grant-section">
     <div class="grant-section-container container">
       <h2 class="grant-heading">Vaše lokace, kde můžete získat dotaci</h2>
-      <div class="grant-address-map">
+      <div class="grant-address-map" id="grant">
         <div class="grant-address-map__half grant-address">
           <div class="grant-address-heading">
             Vaše adresa
@@ -238,7 +238,7 @@ export default {
     border-radius: 4px;
     max-width: 1130px;
     margin: 0 auto;
-    margin-bottom: 85px;
+    margin-bottom: 55px;
     display: flex;
     flex-wrap: wrap;
 

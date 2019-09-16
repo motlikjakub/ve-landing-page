@@ -69,6 +69,8 @@ import Swiper from 'swiper/dist/js/swiper.esm.bundle'
 import Button from './Button'
 import ScrollDown from './ScrollDown'
 
+var VueScrollTo = require('vue-scrollto')
+
 export default {
   name: 'HeaderSwiper',
   components: {
@@ -80,7 +82,8 @@ export default {
     }
   },
   mounted () {
-    const self = this
+    let scrolled = false;
+
     const swiper = new Swiper('.swiper-container', {
       speed: 1000,
       autoplay: {
@@ -89,8 +92,19 @@ export default {
       pagination: {
         el: '.swiper-pagination',
         clickable: true
+      },
+    });
+    swiper.on('reachEnd', function () {
+      if (!scrolled) {
+        setTimeout(function(){
+          VueScrollTo.scrollTo('#address');
+        }, 5000);
       }
-    })
+    });
+
+    window.addEventListener('scroll', function() {
+      scrolled = true;
+    });
   }
 }
 </script>
