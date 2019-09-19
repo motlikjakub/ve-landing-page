@@ -2,7 +2,7 @@
   <section class="grant-section">
     <div class="grant-section-container container">
       <h2 class="grant-heading">Vaše lokace, kde můžete získat dotaci</h2>
-      <div class="grant-address-map" id="grant">
+      <div class="grant-address-map" id="grant"> <!-- Offseted on clients wish -->
         <div class="grant-address-map__half grant-address">
           <div class="grant-address-heading">
             Vaše adresa
@@ -31,11 +31,22 @@
           </div>
           <div class="grant-detail__row">
             <h2 class="grant-detail__heading">Roční výroba a úspora</h2>
-            <p class="grant-detail__content">{{ formatNumber(smallestGrantProduction) }} kWh</p>
+            <p class="grant-detail__content">
+              <animated-number
+                :value="smallestGrantProduction"
+                :formatValue="formatNumber"
+                :duration="300"
+              /> kWh
+            </p>
           </div>
           <div class="grant-detail__row">
             <h2 class="grant-detail__heading">Úspora CO<sub>2</sub></h2>
-            <p class="grant-detail__content">{{ formatNumber(smallestGrantEcoSavings) }} kg</p>
+            <p class="grant-detail__content">
+              <animated-number
+                :value="smallestGrantEcoSavings"
+                :formatValue="formatNumber"
+                :duration="300"
+              /> kg</p>
           </div>
         </article>
         <article class="grant-detail">
@@ -52,11 +63,21 @@
           </div>
           <div class="grant-detail__row">
             <h2 class="grant-detail__heading">Roční výroba a úspora</h2>
-            <p class="grant-detail__content">{{ formatNumber(mediumGrantProduction) }} kWh</p>
+            <p class="grant-detail__content">
+              <animated-number
+                :value="mediumGrantProduction"
+                :formatValue="formatNumber"
+                :duration="300"
+              /> kWh</p>
           </div>
           <div class="grant-detail__row">
             <h2 class="grant-detail__heading">Úspora CO<sub>2</sub></h2>
-            <p class="grant-detail__content">{{ formatNumber(mediumGrantEcoSavings) }} kg</p>
+            <p class="grant-detail__content">
+              <animated-number
+                :value="mediumGrantEcoSavings"
+                :formatValue="formatNumber"
+                :duration="300"
+              /> kg</p>
           </div>
         </article>
         <article class="grant-detail">
@@ -73,11 +94,21 @@
           </div>
           <div class="grant-detail__row">
             <h2 class="grant-detail__heading">Roční výroba a úspora</h2>
-            <p class="grant-detail__content">{{ formatNumber(largestGrantProduction) }} kWh</p>
+            <p class="grant-detail__content">
+              <animated-number
+                :value="largestGrantProduction"
+                :formatValue="formatNumber"
+                :duration="300"
+              /> kWh</p>
           </div>
           <div class="grant-detail__row">
             <h2 class="grant-detail__heading">Úspora CO<sub>2</sub></h2>
-            <p class="grant-detail__content">{{ formatNumber(largestGrantEcoSavings) }} kWh</p>
+            <p class="grant-detail__content">
+              <animated-number
+                :value="largestGrantEcoSavings"
+                :formatValue="formatNumber"
+                :duration="500"
+              /> kWh</p>
           </div>
         </article>
       </div>
@@ -91,12 +122,14 @@
 <script>
 import Button from './Button'
 import axios from 'axios'
+import AnimatedNumber from "animated-number-vue"
 let VueScrollTo = require('vue-scrollto')
 
 export default {
   name: 'GrantSection',
   components: {
-    Button
+    Button,
+    AnimatedNumber
   },
   data () {
     return {
