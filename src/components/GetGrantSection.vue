@@ -20,7 +20,7 @@
             <label class="get-grant-form__label" for="get-grant-email">E-mail</label>
           </div>
           <div>
-            <input class="get-grant-form__input" id="get-grant-email" type="email">
+            <input class="get-grant-form__input" id="get-grant-email" v-model="email_address" type="email">
           </div>
         </div>
         <div class="get-grant-form__row">
@@ -28,7 +28,7 @@
             <label class="get-grant-form__label" for="get-grant-text">Váš text</label>
           </div>
           <div>
-            <textarea class="get-grant-form__input get-grant-form__input--textarea" id="get-grant-text"></textarea>
+            <textarea class="get-grant-form__input get-grant-form__input--textarea" id="get-grant-text" v-model="note"></textarea>
             <div class="get-grant-form-file">
               <input class="get-grant-form-file__input" id="get-grant-file" type="file" accept="image, pdf">
               <div class="get-grant-form-file__half">
@@ -43,7 +43,7 @@
           </div>
         </div>
         <div class="get-grant-form__row get-grant-form__row--with-button">
-          <input id="get-grant-gdpr" class="get-grant-form-checkbox" type="checkbox"><label for="get-grant-gdpr" class="get-grant-form-checkbox-label"><span>Souhlasím se <a href="https://ve.solar/osobni-udaje" target="_blank">zpracováním osobních údajů</a></span></label><Button text="Odeslat" classNames="greenish-button--smaller"/>
+          <input id="get-grant-gdpr" class="get-grant-form-checkbox" type="checkbox"><label for="get-grant-gdpr" class="get-grant-form-checkbox-label"><span>Souhlasím se <a href="https://ve.solar/osobni-udaje" target="_blank">zpracováním osobních údajů</a></span></label><Button @click.native="submitForm" text="Odeslat" classNames="greenish-button--smaller"/>
         </div>
       </form>
     </div>
@@ -52,20 +52,60 @@
 </template>
 
 <script>
+import axios from 'axios'
 import Button from './Button'
 var VueScrollTo = require('vue-scrollto')
 
 export default {
   name: 'GetGrant',
   props: {
-    grant_address: String
+    grant_address: String,
+    address_data: {}
   },
   components: {
     Button
   },
+  data () {
+    return {
+      email_address: '',
+      note: '',
+    }
+  },
   methods: {
     scroll: function (link) {
       VueScrollTo.scrollTo(link)
+    },
+    submitForm: function () {
+      let addressFormData = this.address_data;
+
+      const formData = new FormData();
+      formData.append('address[code]', addressFormData['code']);
+      formData.append('address[latitude]', addressFormData.latitude);
+      formData.append('address[longitude]', addressFormData.longitude);
+      formData.append('address[buildingNumber]', addressFormData.buildingNumber);
+      formData.append('address[city]', addressFormData.city);
+      formData.append('address[zipCode]', addressFormData.zipCode);
+      formData.append('address[district]', addressFormData.district);
+      formData.append('address[region]', addressFormData.region);
+      formData.append('address[country]', addressFormData.country);
+      formData.append('address[street]', addressFormData.street);
+      formData.append('address[cityPart]', addressFormData.cityPart);
+
+      formData.append('email', this.email_address);
+      formData.append('note', this.note);
+
+      axios.post('https://vaseelektrarna.cz/api/vase-elektrarna/submit-offer', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        })
+        .then(response => {
+          console.log(response.data);
+        })
+        .catch(error => {
+          console.log(error)
+          alert('Při získávání dat ze serveru nastala chyba, zkuste to znovu později.')
+        })
     }
   }
 }
@@ -184,6 +224,10 @@ export default {
       min-width: 100%;
       min-height: 110px;
       line-height: 1.5;
+    }
+
+    &:disabled {
+      cursor: not-allowed;
     }
   }
 

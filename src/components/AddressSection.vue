@@ -14,6 +14,17 @@
           <div class="address-form__row">
             <input id="address-input-address" class="address-form-input smartform-whole-address" type="text" placeholder="Ulice a město">
             <Button link="#grant" classNames="checkbox-required" text="Spočítat" @click.native="passAddress"/>
+            <input id="address-input-code" type="hidden" class="smartform-field-CODE">
+            <input id="address-input-latitude" type="hidden" class="smartform-field-GPS_LAT">
+            <input id="address-input-longitude" type="hidden" class="smartform-field-GPS_LONG">
+            <input id="address-input-buildingNumber" type="hidden" class="smartform-field-NUMBER_WHOLE">
+            <input id="address-input-city" type="hidden" class="smartform-field-CITY">
+            <input id="address-input-zipCode" type="hidden" class="smartform-field-ZIP">
+            <input id="address-input-district" type="hidden" class="smartform-field-DISTRICT">
+            <input id="address-input-region" type="hidden" class="smartform-field-REGION">
+            <input id="address-input-country" type="hidden" class="smartform-field-COUNTRY">
+            <input id="address-input-street" type="hidden" class="smartform-field-STREET">
+            <input id="address-input-cityPart" type="hidden" class="smartform-field-PART">
           </div>
           <div class="address-form__row">
             <input id="address-input-agree" class="address-form-checkbox" type="checkbox" v-model="gdpr_accepted" @change="passAddress"><label for="address-input-agree" class="address-form-checkbox-label"><span>Souhlasím se <a href="https://ve.solar/osobni-udaje" target="_blank">zpracováním osobních údajů</a></span></label>
@@ -22,7 +33,7 @@
       </div>
     </section>
     <GrantSection :grant_address="grant_address"/>
-    <GetGrant :grant_address="grant_address"/>
+    <GetGrant :grant_address="grant_address" :address_data="address_data"/>
   </div>
 </template>
 
@@ -40,9 +51,9 @@ export default {
   },
   data () {
     return {
-      input_address: '',
       grant_address: '',
-      gdpr_accepted: false
+      gdpr_accepted: false,
+      address_data: {}
     }
   },
   methods: {
@@ -50,7 +61,21 @@ export default {
       if (this.gdpr_accepted === false) {
         alert('Je nutné souhlasit se zpracováním osobních údajů')
       } else {
-        this.grant_address = document.getElementById('address-input-address').value
+        this.grant_address = document.getElementById('address-input-address').value;
+        this.address_data = {
+          'whole': document.getElementById('address-input-address').value,
+          'code': document.getElementById('address-input-code').value,
+          'latitude': document.getElementById('address-input-latitude').value,
+          'longitude': document.getElementById('address-input-longitude').value,
+          'buildingNumber': document.getElementById('address-input-buildingNumber').value,
+          'city': document.getElementById('address-input-city').value,
+          'zipCode': document.getElementById('address-input-zipCode').value,
+          'district': document.getElementById('address-input-district').value,
+          'region': document.getElementById('address-input-region').value,
+          'country': document.getElementById('address-input-country').value,
+          'street': document.getElementById('address-input-street').value,
+          'cityPart': document.getElementById('address-input-cityPart').value,
+        };
       }
     }
   }

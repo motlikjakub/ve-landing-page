@@ -22,10 +22,14 @@ export default {
         if (!document.querySelector('#address-input-agree:checked')) {
           alert('Je nutné souhlasit se zpracováním osobních údajů')
         } else {
-          VueScrollTo.scrollTo(link)
+          if (link) {
+            VueScrollTo.scrollTo(link)
+          }
         }
       } else {
-        VueScrollTo.scrollTo(link)
+        if (link) {
+          VueScrollTo.scrollTo(link)
+        }
       }
     }
   }
