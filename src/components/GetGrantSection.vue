@@ -30,7 +30,7 @@
           <div>
             <textarea class="get-grant-form__input get-grant-form__input--textarea" id="get-grant-text" v-model="note"></textarea>
             <div class="get-grant-form-file">
-              <input class="get-grant-form-file__input" id="get-grant-file" type="file" accept="image, pdf">
+              <input class="get-grant-form-file__input" id="get-grant-file" type="file" accept="image/*,.pdf">
               <div class="get-grant-form-file__half">
                 <label class="get-grant-form-file__label" for="get-grant-file">Vaše roční vyúčtovací faktura <br>za elektrickou energii</label>
               </div>
@@ -94,6 +94,9 @@ export default {
       formData.append('email', this.email_address);
       formData.append('note', this.note);
 
+      let inputFiles = document.querySelector('#get-grant-file');
+      formData.append("invoice", inputFiles.files[0]);
+
       axios.post('https://vaseelektrarna.cz/api/vase-elektrarna/submit-offer', formData, {
           headers: {
             'Content-Type': 'multipart/form-data'
@@ -104,7 +107,7 @@ export default {
         })
         .catch(error => {
           console.log(error)
-          alert('Při získávání dat ze serveru nastala chyba, zkuste to znovu později.')
+          alert('Při odesílání dat na server nastala chyba, zkuste to znovu později.')
         })
     }
   }
