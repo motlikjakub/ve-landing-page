@@ -195,7 +195,7 @@ export default {
         formData.append('latitude', coords.y);
         formData.append('longitude', coords.x);
 
-        axios.post('https://vaseelektrarna.cz/api/pvgis/vase-elektrarna', formData)
+        axios.post('https://vesolar.adwell.cz/api/pvgis/vase-elektrarna', formData)
           .then(response => {
             fillData(response.data);
           })
