@@ -1,6 +1,7 @@
 <template>
   <div>
     <section class="address-section" id="address">
+    <GDPRconsent/>
     <img class="logo" alt="Vaše elektrárna logo" src="../assets/VE-logo.svg">
       <div class="address-section__inner">
         <h1 class="address-section-text">
@@ -41,13 +42,15 @@
 import Button from './Button'
 import GrantSection from './GrantSection'
 import GetGrant from './GetGrantSection'
+import GDPRconsent from './GDPR-consent'
 
 export default {
   name: 'AddressSection',
   components: {
     Button,
     GrantSection,
-    GetGrant
+    GetGrant,
+    GDPRconsent
   },
   data () {
     return {

@@ -98,7 +98,7 @@ export default {
       let inputFiles = document.querySelector('#get-grant-file');
       formData.append("invoice", inputFiles.files[0]);
 
-      axios.post('https://vesolar.adwell.cz/api/vase-elektrarna/submit-offer', formData, {
+      axios.post('https://vesolar.adwellqq.cz/api/vase-elektrarna/submit-offer', formData, {
           headers: {
             'Content-Type': 'multipart/form-data'
           }
