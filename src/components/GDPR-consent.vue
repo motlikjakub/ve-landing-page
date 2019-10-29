@@ -1,10 +1,10 @@
 <template>
-  <div class="gdpr-consent">
+  <div class="gdpr-consent" :class="{ 'gdpr-consent--shown': show }" id="gdpr-consent">
     <div class="gdpr-consent-inner">
       <div class="gdpr-consent-text">
         Je nutné souhlasit se zpracováním osobních údajů.
       </div>
-      <div class="gdpr-consent-button">
+      <div class="gdpr-consent-button" @click="accept">
         OK
       </div>
     </div>
@@ -14,7 +14,15 @@
 <script>
 
 export default {
-  name: 'GDPRconsent'
+  name: 'GDPRconsent',
+  props: {
+    show: Boolean,
+  },
+  methods: {
+    accept: function() {
+      this.$parent.gdpr_shown = false;
+    }
+  }
 }
 </script>
 
@@ -28,8 +36,14 @@ export default {
     left: 0;
     background: $orange;
     width: 100%;
-    height: 80px;
+    height: 0;
+    overflow: hidden;
     z-index: 100;
+    transition: .3s height;
+
+    &--shown {
+      height: 80px;
+    }
   }
 
   .gdpr-consent-inner {

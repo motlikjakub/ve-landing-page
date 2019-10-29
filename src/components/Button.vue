@@ -1,5 +1,4 @@
 <template>
-
   <a :href="link" class="greenish-button" :class="classNames" v-on:click="click(link)">
     {{text}}
   </a>
@@ -13,23 +12,17 @@ export default {
   props: {
     link: String,
     text: String,
-    classNames: String
+    classNames: String,
+    gdpr_accepted: {
+      type: Boolean,
+      default: true,
+    }
   },
   methods: {
     click: function (link) {
       event.preventDefault()
-      if (event.target.classList.contains('checkbox-required')) {
-        if (!document.querySelector('#address-input-agree:checked')) {
-          alert('Je nutné souhlasit se zpracováním osobních údajů')
-        } else {
-          if (link) {
-            VueScrollTo.scrollTo(link)
-          }
-        }
-      } else {
-        if (link) {
-          VueScrollTo.scrollTo(link)
-        }
+      if (this.gdpr_accepted && link) {
+        VueScrollTo.scrollTo(link)
       }
     }
   }

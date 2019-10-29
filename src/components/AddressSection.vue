@@ -1,7 +1,7 @@
 <template>
   <div>
+    <GDPRconsent v-bind:show="gdpr_shown"/>
     <section class="address-section" id="address">
-    <GDPRconsent/>
     <img class="logo" alt="Vaše elektrárna logo" src="../assets/VE-logo.svg">
       <div class="address-section__inner">
         <h1 class="address-section-text">
@@ -14,7 +14,7 @@
           </div>
           <div class="address-form__row">
             <input id="address-input-address" class="address-form-input smartform-whole-address" type="text" placeholder="Ulice a město">
-            <Button link="#grant" classNames="checkbox-required" text="Spočítat" @click.native="passAddress"/>
+            <Button link="#grant" classNames="checkbox-required" :gdpr_accepted="gdpr_accepted" text="Spočítat" @click.native="passAddress"/>
             <input id="address-input-code" type="hidden" class="smartform-field-CODE">
             <input id="address-input-latitude" type="hidden" class="smartform-field-GPS_LAT">
             <input id="address-input-longitude" type="hidden" class="smartform-field-GPS_LONG">
@@ -56,13 +56,14 @@ export default {
     return {
       grant_address: '',
       gdpr_accepted: false,
+      gdpr_shown: false,
       address_data: {}
     }
   },
   methods: {
     passAddress: function () {
       if (this.gdpr_accepted === false) {
-        alert('Je nutné souhlasit se zpracováním osobních údajů')
+        this.gdpr_shown = true;
       } else {
         this.grant_address = document.getElementById('address-input-address').value;
         this.address_data = {

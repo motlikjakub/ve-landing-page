@@ -98,14 +98,14 @@ export default {
       let inputFiles = document.querySelector('#get-grant-file');
       formData.append("invoice", inputFiles.files[0]);
 
-      axios.post('https://vesolar.adwellqq.cz/api/vase-elektrarna/submit-offer', formData, {
+      axios.post('https://vesolar.adwell.cz/api/vase-elektrarna/submit-offer', formData, {
           headers: {
             'Content-Type': 'multipart/form-data'
           }
         })
         .then(response => {
           console.log(response);
-        })
+        }) // TODO IF CODE 409 already exists
         .catch(error => {
           console.log(error)
           alert('Při odesílání dat na server nastala chyba, zkuste to znovu později.')
