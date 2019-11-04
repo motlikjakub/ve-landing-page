@@ -113,8 +113,8 @@ export default {
   .address-section-text {
     color: #fff;
     font-family: $nexa;
-    font-size: 45px;
-    line-height: 60px;
+    font-size: 38px;
+    line-height: 1.2;
     font-weight: 300;
     letter-spacing: 1.8px;
     text-align: center;

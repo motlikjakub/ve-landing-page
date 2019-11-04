@@ -1,6 +1,6 @@
 <template>
   <div class="gdpr-consent" :class="{ 'gdpr-consent--shown': show }" id="gdpr-consent">
-    <div class="gdpr-consent-inner">
+    <div class="gdpr-consent-inner container">
       <div class="gdpr-consent-text">
         Je nutné souhlasit se zpracováním osobních údajů.
       </div>
@@ -39,15 +39,18 @@ export default {
     height: 0;
     overflow: hidden;
     z-index: 100;
+    box-sizing: border-box;
     transition: .3s height;
 
     &--shown {
       height: 80px;
+      padding: 20px 0;
     }
   }
 
   .gdpr-consent-inner {
-    max-width: 770px;
+    max-width: 810px;
+    box-sizing: border-box;
     height: 100%;
     margin: 0 auto;
     display: flex;
@@ -58,9 +61,13 @@ export default {
   .gdpr-consent-text {
     color: #fff;
     font-family: $nexa;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 300;
     letter-spacing: 0.72px;
+
+    @media only screen and (min-width: $screen-md) {
+      font-size: 18px;
+    }
   }
 
   .gdpr-consent-button {

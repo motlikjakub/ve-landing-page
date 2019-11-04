@@ -2,12 +2,16 @@
   <section class="grant-section">
     <div class="grant-section-overlay" v-bind:class="{ 'is-active': overlay }">
       <div v-if="grant_address">
-        <div class="grant-heading is-white">Probíhá výpočet dat...</div>
-        <div class="text-center"><div class="loader"></div></div>
+        <div class="container">
+          <div class="grant-heading is-white">Probíhá výpočet dat...</div>
+          <div class="text-center"><div class="loader"></div></div>
+        </div>
       </div>
       <div v-else>
-        <div class="grant-heading is-white">Pro výpočet potřebujeme znát vaši adresu.</div>
-        <div class="text-center"><Button link="#address" text="Zadat adresu"/></div>
+        <div class="container">
+          <div class="grant-heading is-white">Pro výpočet potřebujeme znát vaši adresu.</div>
+          <div class="text-center"><Button link="#address" text="Zadat adresu"/></div>
+        </div>
       </div>
     </div>
     <div class="grant-section-container container" v-bind:class="{ 'is-active': overlay }">
@@ -272,12 +276,18 @@ export default {
     color: #fff;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
+    padding: 40px 0;
+    box-sizing: border-box;
     opacity: 0;
     transition: .4s;
 
     &.is-active {
       opacity: 1;
+    }
+
+    @media only screen and (min-width: $screen-md) {
+      align-items: center;
     }
   }
 
