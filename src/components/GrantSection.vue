@@ -279,11 +279,13 @@ export default {
     align-items: flex-start;
     padding: 40px 0;
     box-sizing: border-box;
+    pointer-events: none;
     opacity: 0;
     transition: .4s;
 
     &.is-active {
       opacity: 1;
+      pointer-events: all;
     }
 
     @media only screen and (min-width: $screen-md) {
