@@ -1,6 +1,16 @@
 <template>
   <section class="grant-section">
-    <div class="grant-section-container container">
+    <div class="grant-section-overlay" v-bind:class="{ 'is-active': overlay }">
+      <div v-if="grant_address">
+        <div class="grant-heading is-white">Probíhá výpočet dat...</div>
+        <div class="text-center"><div class="loader"></div></div>
+      </div>
+      <div v-else>
+        <div class="grant-heading is-white">Pro výpočet potřebujeme znát vaši adresu.</div>
+        <div class="text-center"><Button link="#address" text="Zadat adresu"/></div>
+      </div>
+    </div>
+    <div class="grant-section-container container" v-bind:class="{ 'is-active': overlay }">
       <h2 class="grant-heading">Vaše lokace, kde můžete získat dotaci</h2>
       <div class="grant-address-map" id="grant"> <!-- Offseted on clients wish -->
         <div class="grant-address-map__half grant-address">
@@ -139,6 +149,7 @@ export default {
       mediumGrantEcoSavings: 0,
       largestGrantProduction: 0,
       largestGrantEcoSavings: 0,
+      overlay: true,
     }
   },
   props: {
@@ -158,6 +169,7 @@ export default {
     },
     handleGrantData: function (address) {
       let selfThis = this;
+      selfThis.overlay = true;
 
       document.getElementById('mapa').innerHTML = '';
       var coords;
@@ -190,7 +202,7 @@ export default {
       }
 
       function loadGrantData (coords) {
-        
+
         const formData = new FormData();
         formData.append('latitude', coords.y);
         formData.append('longitude', coords.x);
@@ -212,6 +224,7 @@ export default {
         selfThis.mediumGrantEcoSavings = data[1]['eco-savings'];
         selfThis.largestGrantProduction = data[2]['production'];
         selfThis.largestGrantEcoSavings = data[2]['eco-savings'];
+        selfThis.overlay = false;
       }
     }
   },
@@ -248,6 +261,49 @@ export default {
 	  }
   }
 
+  .grant-section-overlay {
+    z-index: 10;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,.8);
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: .4s;
+
+    &.is-active {
+      opacity: 1;
+    }
+  }
+
+  .loader {
+    border: 10px solid rgba(255,255,255,.8); /* Light grey */
+    border-top: 10px solid $greenish; /* Greenish */
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    animation: spin 1.2s linear infinite;
+    margin: 0 auto;
+  }
+
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+  .grant-section-container {
+    transition: .4s;
+
+    &.is-active {
+      filter: blur(3px);
+    }
+  }
+
   .grant-heading {
     color: $rich-black;
     font-family: $nexa;
@@ -258,6 +314,10 @@ export default {
     text-align: center;
     margin-top: 0;
     margin-bottom: 55px;
+
+    &.is-white {
+      color: #fff;
+    }
 
     @media only screen and (min-width: $screen-md) {
       font-size: 40px;
