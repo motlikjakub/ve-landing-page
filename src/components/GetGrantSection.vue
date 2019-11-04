@@ -1,5 +1,6 @@
 <template>
   <section class="get-grant" id="request-grant">
+    <GDPRconsent v-bind:show="gdpr_shown"/>
     <div class="get-grant__dots get-grant__dots--top"></div>
     <div class="get-grant__container container">
       <h1 class="get-grant__heading">Zjistěte zdarma a jednoduše, <br> na jak vysokou dotaci máte nárok</h1>
@@ -30,13 +31,17 @@
           <div>
             <textarea class="get-grant-form__input get-grant-form__input--textarea" id="get-grant-text" v-model="note"></textarea>
             <div class="get-grant-form-file">
-              <input class="get-grant-form-file__input" id="get-grant-file" type="file" accept="image/*,.pdf">
-              <div class="get-grant-form-file__half">
-                <label class="get-grant-form-file__label" for="get-grant-file">Vaše roční vyúčtovací faktura <br>za elektrickou energii</label>
-              </div>
-              <div class="get-grant-form-file__half get-grant-form-file__half--with-button">
-                <div class="get-grant-form-file__button">
-                  Nahrát soubor
+              <input class="get-grant-form-file__input" id="get-grant-file" type="file" accept="image/*,.pdf" ref="invoice_file" @change="invoiceSelected">
+              <div class="get-grant-form-file--top" v-html="invoice_select_text"></div>
+              <div class="get-grant-form-file--bottom">
+                <div class="get-grant-form-file__half">
+                  <label class="get-grant-form-file__label" for="get-grant-file">Roční vyúčtovací faktura <br>za elektrickou energii</label>
+                </div>
+                <div class="get-grant-form-file__half get-grant-form-file__half--with-button">
+                  <div class="get-grant-form-file__button">
+                    <span v-if="invoice_selected">Změnit soubor</span>
+                    <span v-else>Nahrát soubor</span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -55,6 +60,7 @@
 <script>
 import axios from 'axios'
 import Button from './Button'
+import GDPRconsent from './GDPR-consent'
 var VueScrollTo = require('vue-scrollto')
 
 export default {
@@ -64,52 +70,70 @@ export default {
     address_data: {}
   },
   components: {
-    Button
+    Button,
+    GDPRconsent
   },
   data () {
     return {
       email_address: '',
       note: '',
+      gdpr_accepted: false,
+      gdpr_shown: false,
+      invoice_selected: false,
+      invoice_select_text: 'Nahrajete-li soubor, Váš dotaz bude přesnější. <br>Pokud ne, nevadí, můžete pokračovat dále v odeslání.'
     }
   },
   methods: {
     scroll: function (link) {
       VueScrollTo.scrollTo(link)
     },
+    invoiceSelected: function () {
+      if (this.$refs.invoice_file.files[0]) {
+        this.invoice_selected = true;
+        this.invoice_select_text = 'Soubor <span style="font-weight: 400">' + this.$refs.invoice_file.files[0].name + '</span> nahrán';
+      } else {
+        this.invoice_selected = false;
+        this.invoice_select_text = 'Nahrajete-li soubor, Váš dotaz bude přesnější. <br>Pokud ne, nevadí, můžete pokračovat dále v odeslání.';
+      }
+    },
     submitForm: function () {
-      let addressFormData = this.address_data;
+      if (this.gdpr_accepted === false) {
+        this.gdpr_shown = true;
+      } else {
+        let addressFormData = this.address_data;
 
-      const formData = new FormData();
-      formData.append('address[code]', addressFormData['code']);
-      formData.append('address[latitude]', addressFormData.latitude);
-      formData.append('address[longitude]', addressFormData.longitude);
-      formData.append('address[buildingNumber]', addressFormData.buildingNumber);
-      formData.append('address[city]', addressFormData.city);
-      formData.append('address[zipCode]', addressFormData.zipCode);
-      formData.append('address[district]', addressFormData.district);
-      formData.append('address[region]', addressFormData.region);
-      formData.append('address[country]', addressFormData.country);
-      formData.append('address[street]', addressFormData.street);
-      formData.append('address[cityPart]', addressFormData.cityPart);
+        const formData = new FormData();
+        formData.append('address[code]', addressFormData['code']);
+        formData.append('address[latitude]', addressFormData.latitude);
+        formData.append('address[longitude]', addressFormData.longitude);
+        formData.append('address[buildingNumber]', addressFormData.buildingNumber);
+        formData.append('address[city]', addressFormData.city);
+        formData.append('address[zipCode]', addressFormData.zipCode);
+        formData.append('address[district]', addressFormData.district);
+        formData.append('address[region]', addressFormData.region);
+        formData.append('address[country]', addressFormData.country);
+        formData.append('address[street]', addressFormData.street);
+        formData.append('address[cityPart]', addressFormData.cityPart);
 
-      formData.append('email', this.email_address);
-      formData.append('note', this.note);
+        formData.append('email', this.email_address);
+        formData.append('note', this.note);
 
-      let inputFiles = document.querySelector('#get-grant-file');
-      formData.append("invoice", inputFiles.files[0]);
+        let inputFiles = document.querySelector('#get-grant-file');
+        formData.append('invoice', inputFiles.files[0]);
 
-      axios.post('https://vesolar.adwell.cz/api/vase-elektrarna/submit-offer', formData, {
+        axios.post('https://vesolar.adwell.cz/api/vase-elektrarna/submit-offer', formData, {
           headers: {
             'Content-Type': 'multipart/form-data'
           }
         })
-        .then(response => {
-          console.log(response);
-        }) // TODO IF CODE 409 already exists
-        .catch(error => {
-          console.log(error)
-          alert('Při odesílání dat na server nastala chyba, zkuste to znovu později.')
-        })
+          .then(response => {
+            console.log(response);
+          }) // TODO IF CODE 409 already exists
+          .catch(error => {
+            console.log(error)
+            alert('Při odesílání dat na server nastala chyba, zkuste to znovu později.')
+          })
+      }
     }
   }
 }
@@ -182,7 +206,7 @@ export default {
   }
 
   .get-grant-form {
-    max-width: 500px;
+    max-width: 600px;
     margin: 0 auto;
   }
 
@@ -257,10 +281,6 @@ export default {
     border-radius: 4px;
     background: #c7cfd9;
     position: relative;
-    padding: 20px 20px;
-    box-sizing: border-box;
-    display: flex;
-    flex-wrap: wrap;
     align-items: center;
     transition: .3s background;
 
@@ -269,13 +289,33 @@ export default {
 	  }
 
     &:hover {
-      //background: #d3dae3;
+      //background: #737B85;
 
       .get-grant-form-file__button {
         color: #fff;
         background: $rich-black;
       }
     }
+  }
+
+  .get-grant-form-file--top {
+    color: $rich-black;
+    font-family: $nexa;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 24px;
+    letter-spacing: 0.64px;
+    text-align: center;
+    padding: 20px 22px;
+    box-sizing: border-box;
+    border-bottom: 1px solid #fff;
+  }
+
+  .get-grant-form-file--bottom {
+    padding: 20px 22px;
+    box-sizing: border-box;
+    display: flex;
+    flex-wrap: wrap;
   }
 
   .get-grant-form-file__input {
