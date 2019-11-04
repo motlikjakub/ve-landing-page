@@ -1,5 +1,6 @@
 <template>
   <section class="grant-section">
+    <AlertBar v-bind:show="alert_bar_shown" :message="alert_message"/>
     <div class="grant-section-overlay" v-bind:class="{ 'is-active': overlay }">
       <div v-if="grant_address">
         <div class="container">
@@ -136,12 +137,15 @@
 <script>
 import Button from './Button'
 import axios from 'axios'
-import AnimatedNumber from "animated-number-vue"
+import AnimatedNumber from 'animated-number-vue'
+import AlertBar from './AlertBar'
+import { APIendpoint } from '../variables.js'
 let VueScrollTo = require('vue-scrollto')
 
 export default {
   name: 'GrantSection',
   components: {
+    AlertBar,
     Button,
     AnimatedNumber
   },
@@ -154,6 +158,8 @@ export default {
       largestGrantProduction: 0,
       largestGrantEcoSavings: 0,
       overlay: true,
+      alert_bar_shown: false,
+      alert_message: 'Pozor'
     }
   },
   props: {
@@ -172,6 +178,7 @@ export default {
       return number.toLocaleString('it-IT');
     },
     handleGrantData: function (address) {
+      console.log(APIendpoint);
       let selfThis = this;
       selfThis.overlay = true;
 
@@ -182,7 +189,8 @@ export default {
 
       function odpoved (geocoder) { /* Odpověď */
         if (!geocoder.getResults()[0].results.length) {
-          alert('Tuto adresu bohužel neznáme, pro více informací nás kontaktujte.');
+          selfThis.alert_message = 'Tuto adresu bohužel neznáme, pro více informací nás kontaktujte.';
+          selfThis.alert_bar_shown = true;
           return
         }
 
@@ -211,13 +219,14 @@ export default {
         formData.append('latitude', coords.y);
         formData.append('longitude', coords.x);
 
-        axios.post('https://vesolar.adwell.cz/api/pvgis/vase-elektrarna', formData)
+        axios.post(APIendpoint + '/api/pvgis/vase-elektrarna', formData)
           .then(response => {
             fillData(response.data);
           })
           .catch(error => {
             console.log(error)
-            alert('Při získávání dat ze serveru nastala chyba, zkuste to znovu později.')
+            selfThis.alert_message = 'Při získávání dat ze serveru nastala chyba, zkuste to znovu později.';
+            selfThis.alert_bar_shown = true;
           })
       }
 

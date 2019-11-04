@@ -63,6 +63,7 @@ import axios from 'axios'
 import Button from './Button'
 import GDPRconsent from './GDPR-consent'
 import AlertBar from './AlertBar'
+import { APIendpoint } from '../variables.js'
 var VueScrollTo = require('vue-scrollto')
 
 export default {
@@ -128,7 +129,7 @@ export default {
         let inputFiles = document.querySelector('#get-grant-file');
         formData.append('invoice', inputFiles.files[0]);
 
-        axios.post('https://vesolar.adwell.cz/api/vase-elektrarna/submit-offer', formData, {
+        axios.post(APIendpoint + '/api/vase-elektrarna/submit-offer', formData, {
           headers: {
             'Content-Type': 'multipart/form-data'
           }
