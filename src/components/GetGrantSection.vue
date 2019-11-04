@@ -1,6 +1,7 @@
 <template>
   <section class="get-grant" id="request-grant">
     <GDPRconsent v-bind:show="gdpr_shown"/>
+    <AlertBar v-bind:show="alert_bar_shown" :message="alert_message"/>
     <div class="get-grant__dots get-grant__dots--top"></div>
     <div class="get-grant__container container">
       <h1 class="get-grant__heading">Zjistěte zdarma a jednoduše, <br> na jak vysokou dotaci máte nárok</h1>
@@ -48,7 +49,7 @@
           </div>
         </div>
         <div class="get-grant-form__row get-grant-form__row--with-button">
-          <input id="get-grant-gdpr" class="get-grant-form-checkbox" type="checkbox"><label for="get-grant-gdpr" class="get-grant-form-checkbox-label"><span>Souhlasím se <a href="https://ve.solar/osobni-udaje" target="_blank">zpracováním osobních údajů</a></span></label>
+          <input id="get-grant-gdpr" class="get-grant-form-checkbox" v-model="gdpr_accepted" type="checkbox"><label for="get-grant-gdpr" class="get-grant-form-checkbox-label"><span>Souhlasím se <a href="https://ve.solar/osobni-udaje" target="_blank">zpracováním osobních údajů</a></span></label>
           <Button @click.native="submitForm" text="Odeslat" classNames="greenish-button--smaller"/>
         </div>
       </form>
@@ -61,6 +62,7 @@
 import axios from 'axios'
 import Button from './Button'
 import GDPRconsent from './GDPR-consent'
+import AlertBar from './AlertBar'
 var VueScrollTo = require('vue-scrollto')
 
 export default {
@@ -70,6 +72,7 @@ export default {
     address_data: {}
   },
   components: {
+    AlertBar,
     Button,
     GDPRconsent
   },
@@ -80,7 +83,9 @@ export default {
       gdpr_accepted: false,
       gdpr_shown: false,
       invoice_selected: false,
-      invoice_select_text: 'Nahrajete-li soubor, Váš dotaz bude přesnější. <br>Pokud ne, nevadí, můžete pokračovat dále v odeslání.'
+      invoice_select_text: 'Nahrajete-li soubor, Váš dotaz bude přesnější. <br>Pokud ne, nevadí, můžete pokračovat dále v odeslání.',
+      alert_bar_shown: false,
+      alert_message: 'Pro tuto adresu již evidujeme dotaz na výši dotace.'
     }
   },
   methods: {
@@ -100,6 +105,8 @@ export default {
       if (this.gdpr_accepted === false) {
         this.gdpr_shown = true;
       } else {
+        this.alert_message = 'Probíhá odesílání dat...';
+        this.alert_bar_shown = true;
         let addressFormData = this.address_data;
 
         const formData = new FormData();
@@ -128,10 +135,18 @@ export default {
         })
           .then(response => {
             console.log(response);
-          }) // TODO IF CODE 409 already exists
+            this.alert_message = 'Data byla úspěšně odeslána.';
+            this.alert_bar_shown = true;
+          })
           .catch(error => {
-            console.log(error)
-            alert('Při odesílání dat na server nastala chyba, zkuste to znovu později.')
+            console.log(error);
+            if (error.response.status === 409) {
+              this.alert_message = 'Pro tuto adresu již evidujeme dotaz na výši dotace.';
+              this.alert_bar_shown = true;
+            } else {
+              this.alert_message = 'Při odesílání dat na server nastala chyba, zkuste to znovu později.';
+              this.alert_bar_shown = true;
+            }
           })
       }
     }
