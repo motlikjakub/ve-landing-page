@@ -135,12 +135,16 @@ export default {
           }
         })
           .then(response => {
-            console.log(response);
+            if (process.env.NODE_ENV === 'development') { //Only if development
+              console.log(response);
+            }
             this.alert_message = 'Data byla úspěšně odeslána.';
             this.alert_bar_shown = true;
           })
           .catch(error => {
-            console.log(error);
+            if (process.env.NODE_ENV === 'development') { //Only if development
+              console.log(error);
+            }
             if (error.response.status === 409) {
               this.alert_message = 'Pro tuto adresu již evidujeme dotaz na výši dotace.';
               this.alert_bar_shown = true;

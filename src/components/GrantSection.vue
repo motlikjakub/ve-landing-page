@@ -178,7 +178,6 @@ export default {
       return number.toLocaleString('it-IT');
     },
     handleGrantData: function (address) {
-      console.log(APIendpoint);
       let selfThis = this;
       selfThis.overlay = true;
 
@@ -222,9 +221,14 @@ export default {
         axios.post(APIendpoint + '/api/pvgis/vase-elektrarna', formData)
           .then(response => {
             fillData(response.data);
+            if (process.env.NODE_ENV === 'development') { //Only if development
+              console.log(response.data);
+            }
           })
           .catch(error => {
-            console.log(error)
+            if (process.env.NODE_ENV === 'development') { //Only if development
+              console.log(error);
+            }
             selfThis.alert_message = 'Při získávání dat ze serveru nastala chyba, zkuste to znovu později.';
             selfThis.alert_bar_shown = true;
           })
