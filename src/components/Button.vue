@@ -13,7 +13,7 @@ export default {
     link: String,
     text: String,
     classNames: String,
-    gdpr_accepted: {
+    allow_scroll: {
       type: Boolean,
       default: true,
     }
@@ -21,7 +21,7 @@ export default {
   methods: {
     click: function (link) {
       event.preventDefault()
-      if (this.gdpr_accepted && link) {
+      if (this.allow_scroll && link) {
         VueScrollTo.scrollTo(link)
       }
     }

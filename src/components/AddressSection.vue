@@ -1,6 +1,7 @@
 <template>
   <div>
     <GDPRconsent v-bind:show="gdpr_shown"/>
+    <AlertBar v-bind:show="alert_bar_shown" :message="alert_message"/>
     <section class="address-section" id="address">
     <img class="logo" alt="Vaše elektrárna logo" src="../assets/VE-logo.svg">
       <div class="address-section__inner">
@@ -13,8 +14,8 @@
             <label for="address-input-address" class="address-form-input-label">Ulice a město</label>
           </div>
           <div class="address-form__row">
-            <input id="address-input-address" class="address-form-input smartform-whole-address" type="text" placeholder="Ulice a město">
-            <Button link="#grant" classNames="checkbox-required" :gdpr_accepted="gdpr_accepted" text="Spočítat" @click.native="passAddress"/>
+            <input id="address-input-address" class="address-form-input smartform-whole-address" type="text" placeholder="Ulice a město" @focusout="addressChanged">
+            <Button link="#grant" classNames="checkbox-required" :allow_scroll="allow_scroll" text="Spočítat" @click.native="passAddress"/>
             <input id="address-input-code" type="hidden" class="smartform-field-CODE">
             <input id="address-input-latitude" type="hidden" class="smartform-field-GPS_LAT">
             <input id="address-input-longitude" type="hidden" class="smartform-field-GPS_LONG">
@@ -43,6 +44,7 @@ import Button from './Button'
 import GrantSection from './GrantSection'
 import GetGrant from './GetGrantSection'
 import GDPRconsent from './GDPR-consent'
+import AlertBar from './AlertBar'
 
 export default {
   name: 'AddressSection',
@@ -50,36 +52,69 @@ export default {
     Button,
     GrantSection,
     GetGrant,
-    GDPRconsent
+    GDPRconsent,
+    AlertBar
   },
   data () {
     return {
+      typed_address: '',
       grant_address: '',
       gdpr_accepted: false,
       gdpr_shown: false,
-      address_data: {}
+      allow_scroll: false,
+      address_data: {},
+      alert_bar_shown: false,
+      alert_message: 'Je nutné vyplnit adresu.'
     }
   },
   methods: {
     passAddress: function () {
-      if (this.gdpr_accepted === false) {
-        this.gdpr_shown = true;
+      if (this.typed_address) {
+        if (this.gdpr_accepted) {
+          this.allow_scroll = true;
+          this.grant_address = document.getElementById('address-input-address').value;
+          this.address_data = {
+            'whole': document.getElementById('address-input-address').value,
+            'code': document.getElementById('address-input-code').value,
+            'latitude': document.getElementById('address-input-latitude').value,
+            'longitude': document.getElementById('address-input-longitude').value,
+            'buildingNumber': document.getElementById('address-input-buildingNumber').value,
+            'city': document.getElementById('address-input-city').value,
+            'zipCode': document.getElementById('address-input-zipCode').value,
+            'district': document.getElementById('address-input-district').value,
+            'region': document.getElementById('address-input-region').value,
+            'country': document.getElementById('address-input-country').value,
+            'street': document.getElementById('address-input-street').value,
+            'cityPart': document.getElementById('address-input-cityPart').value,
+          };
+        } else {
+          this.gdpr_shown = true;
+        }
       } else {
-        this.grant_address = document.getElementById('address-input-address').value;
-        this.address_data = {
-          'whole': document.getElementById('address-input-address').value,
-          'code': document.getElementById('address-input-code').value,
-          'latitude': document.getElementById('address-input-latitude').value,
-          'longitude': document.getElementById('address-input-longitude').value,
-          'buildingNumber': document.getElementById('address-input-buildingNumber').value,
-          'city': document.getElementById('address-input-city').value,
-          'zipCode': document.getElementById('address-input-zipCode').value,
-          'district': document.getElementById('address-input-district').value,
-          'region': document.getElementById('address-input-region').value,
-          'country': document.getElementById('address-input-country').value,
-          'street': document.getElementById('address-input-street').value,
-          'cityPart': document.getElementById('address-input-cityPart').value,
-        };
+        this.alert_bar_shown = true;
+      }
+    },
+    addressChanged: function () {
+      if (document.getElementById('address-input-address').value) {
+        this.typed_address = true;
+      } else {
+        this.typed_address = false;
+      }
+    }
+  },
+  watch: {
+    typed_address: function () {
+      if (this.typed_address) {
+        this.alert_bar_shown = false;
+      } else {
+        this.alert_bar_shown = true;
+      }
+    },
+    gdpr_accepted: function () {
+      if (this.gdpr_accepted) {
+        this.gdpr_shown = false;
+      } else {
+        this.gdpr_shown = true;
       }
     }
   }
