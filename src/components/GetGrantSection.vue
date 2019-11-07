@@ -86,7 +86,7 @@ export default {
       invoice_selected: false,
       invoice_select_text: 'Nahrajete-li soubor, Váš dotaz bude přesnější. <br>Pokud ne, nevadí, můžete pokračovat dále v odeslání.',
       alert_bar_shown: false,
-      alert_message: 'Pro tuto adresu již evidujeme dotaz na výši dotace.'
+      alert_message: 'Pro tuto adresu již evidujeme dotaz na výši dotace'
     }
   },
   methods: {
@@ -138,7 +138,7 @@ export default {
             if (process.env.NODE_ENV === 'development') { //Only if development
               console.log(response);
             }
-            this.alert_message = 'Data byla úspěšně odeslána.';
+            this.alert_message = 'Data byla úspěšně odeslána';
             this.alert_bar_shown = true;
           })
           .catch(error => {
@@ -146,10 +146,10 @@ export default {
               console.log(error);
             }
             if (error.response.status === 409) {
-              this.alert_message = 'Pro tuto adresu již evidujeme dotaz na výši dotace.';
+              this.alert_message = 'Pro tuto adresu již evidujeme dotaz na výši dotace';
               this.alert_bar_shown = true;
             } else {
-              this.alert_message = 'Při odesílání dat na server nastala chyba, zkuste to znovu později.';
+              this.alert_message = 'Při odesílání dat na server nastala chyba, zkuste to znovu později';
               this.alert_bar_shown = true;
             }
           })

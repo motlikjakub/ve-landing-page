@@ -64,7 +64,7 @@ export default {
       allow_scroll: false,
       address_data: {},
       alert_bar_shown: false,
-      alert_message: 'Je nutné vyplnit adresu.'
+      alert_message: 'Je nutné vyplnit adresu'
     }
   },
   methods: {

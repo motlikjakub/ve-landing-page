@@ -10,7 +10,7 @@
       </div>
       <div v-else>
         <div class="container">
-          <div class="grant-heading is-white">Pro výpočet potřebujeme znát vaši adresu.</div>
+          <div class="grant-heading is-white">Pro výpočet potřebujeme znát vaši adresu</div>
           <div class="text-center"><Button link="#address" text="Zadat adresu"/></div>
         </div>
       </div>
@@ -188,7 +188,7 @@ export default {
 
       function odpoved (geocoder) { /* Odpověď */
         if (!geocoder.getResults()[0].results.length) {
-          selfThis.alert_message = 'Tuto adresu bohužel neznáme, pro více informací nás kontaktujte.';
+          selfThis.alert_message = 'Tuto adresu bohužel neznáme, pro více informací nás kontaktujte';
           selfThis.alert_bar_shown = true;
           return
         }
@@ -229,7 +229,7 @@ export default {
             if (process.env.NODE_ENV === 'development') { //Only if development
               console.log(error);
             }
-            selfThis.alert_message = 'Při získávání dat ze serveru nastala chyba, zkuste to znovu později.';
+            selfThis.alert_message = 'Při získávání dat ze serveru nastala chyba, zkuste to znovu později';
             selfThis.alert_bar_shown = true;
           })
       }
