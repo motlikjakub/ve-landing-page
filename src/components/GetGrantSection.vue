@@ -14,7 +14,7 @@
             <input class="get-grant-form__input" id="get-grant-address" type="text" v-model="grant_address" disabled>
           </div>
           <div>
-            <a class="get-grant-form__link" href="#address" v-on:click="scroll('#address')">Zadat novou adresu</a>
+            <a class="get-grant-form__link" href="#address" v-on:click="scroll('#address')" @click="hideAlert()">Zadat novou adresu</a>
           </div>
         </div>
         <div class="get-grant-form__row">
@@ -33,7 +33,7 @@
             <textarea class="get-grant-form__input get-grant-form__input--textarea" id="get-grant-text" v-model="note"></textarea>
             <div class="get-grant-form-file">
               <input class="get-grant-form-file__input" id="get-grant-file" type="file" accept="image/*,.pdf" ref="invoice_file" @change="invoiceSelected">
-              <div class="get-grant-form-file--top" v-html="invoice_select_text"></div>
+              <div class="get-grant-form-file--top" :class="{ 'is-shown': invoice_select_text }" v-html="invoice_select_text"></div>
               <div class="get-grant-form-file--bottom">
                 <div class="get-grant-form-file__half">
                   <label class="get-grant-form-file__label" for="get-grant-file">Roční vyúčtovací faktura <br>za elektrickou energii</label>
@@ -84,9 +84,9 @@ export default {
       gdpr_accepted: false,
       gdpr_shown: false,
       invoice_selected: false,
-      invoice_select_text: 'Nahrajete-li soubor, Váš dotaz bude přesnější. <br>Pokud ne, nevadí, můžete pokračovat dále v odeslání.',
+      invoice_select_text: '',
       alert_bar_shown: false,
-      alert_message: 'Pro tuto adresu již evidujeme dotaz na výši dotace'
+      alert_message: 'Pro tuto adresu již evidujeme dotaz na výši dotace',
     }
   },
   methods: {
@@ -102,57 +102,98 @@ export default {
         this.invoice_select_text = 'Nahrajete-li soubor, Váš dotaz bude přesnější. <br>Pokud ne, nevadí, můžete pokračovat dále v odeslání.';
       }
     },
+    validEmail: function (email) {
+      var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      return re.test(email);
+    },
     submitForm: function () {
-      if (this.gdpr_accepted === false) {
-        this.gdpr_shown = true;
-      } else {
-        this.alert_message = 'Probíhá odesílání dat...';
-        this.alert_bar_shown = true;
-        let addressFormData = this.address_data;
+      if (this.grant_address) {
+        if (this.validEmail(this.email_address)) {
+          if (this.gdpr_accepted) {
+            let addressFormData = this.address_data;
 
-        const formData = new FormData();
-        formData.append('address[code]', addressFormData['code']);
-        formData.append('address[latitude]', addressFormData.latitude);
-        formData.append('address[longitude]', addressFormData.longitude);
-        formData.append('address[buildingNumber]', addressFormData.buildingNumber);
-        formData.append('address[city]', addressFormData.city);
-        formData.append('address[zipCode]', addressFormData.zipCode);
-        formData.append('address[district]', addressFormData.district);
-        formData.append('address[region]', addressFormData.region);
-        formData.append('address[country]', addressFormData.country);
-        formData.append('address[street]', addressFormData.street);
-        formData.append('address[cityPart]', addressFormData.cityPart);
+            const formData = new FormData();
+            formData.append('address[code]', addressFormData['code']);
+            formData.append('address[latitude]', addressFormData.latitude);
+            formData.append('address[longitude]', addressFormData.longitude);
+            formData.append('address[buildingNumber]', addressFormData.buildingNumber);
+            formData.append('address[city]', addressFormData.city);
+            formData.append('address[zipCode]', addressFormData.zipCode);
+            formData.append('address[district]', addressFormData.district);
+            formData.append('address[region]', addressFormData.region);
+            formData.append('address[country]', addressFormData.country);
+            formData.append('address[street]', addressFormData.street);
+            formData.append('address[cityPart]', addressFormData.cityPart);
 
-        formData.append('email', this.email_address);
-        formData.append('note', this.note);
+            formData.append('email', this.email_address);
+            formData.append('note', this.note);
 
-        let inputFiles = document.querySelector('#get-grant-file');
-        formData.append('invoice', inputFiles.files[0]);
+            let inputFiles = document.querySelector('#get-grant-file');
+            formData.append('invoice', inputFiles.files[0]);
 
-        axios.post(APIendpoint + '/api/vase-elektrarna/submit-offer', formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data'
-          }
-        })
-          .then(response => {
-            if (process.env.NODE_ENV === 'development') { //Only if development
-              console.log(response);
-            }
-            this.alert_message = 'Data byla úspěšně odeslána';
-            this.alert_bar_shown = true;
-          })
-          .catch(error => {
-            if (process.env.NODE_ENV === 'development') { //Only if development
-              console.log(error);
-            }
-            if (error.response.status === 409) {
-              this.alert_message = 'Pro tuto adresu již evidujeme dotaz na výši dotace';
+            if (inputFiles.files[0] || this.invoice_select_text) {
+              this.alert_message = 'Probíhá odesílání dat...';
               this.alert_bar_shown = true;
+
+              axios.post(APIendpoint + '/api/vase-elektrarna/submit-offer', formData, {
+                headers: {
+                  'Content-Type': 'multipart/form-data'
+                }
+              })
+                .then(response => {
+                  this.alert_message = 'Data byla úspěšně odeslána';
+                  this.alert_bar_shown = true;
+                })
+                .catch(error => {
+                  if (process.env.NODE_ENV === 'development') { //Only if development
+                    console.log(error);
+                  }
+                  if (error.response.status === 409) {
+                    this.alert_message = 'Pro tuto adresu již evidujeme dotaz na výši dotace';
+                    this.alert_bar_shown = true;
+                  } else {
+                    this.alert_message = 'Při odesílání dat na server nastala chyba, zkuste to znovu později';
+                    this.alert_bar_shown = true;
+                  }
+                })
             } else {
-              this.alert_message = 'Při odesílání dat na server nastala chyba, zkuste to znovu později';
-              this.alert_bar_shown = true;
+              this.invoice_select_text = 'Nahrajete-li soubor, Váš dotaz bude přesnější. <br>Pokud ne, nevadí, můžete pokračovat dále v odeslání.';
             }
-          })
+          } else {
+            this.gdpr_shown = true;
+          }
+        } else {
+          this.alert_message = 'Email není validní';
+          this.alert_bar_shown = true;
+        }
+      } else {
+        this.alert_message = 'Je nutné vyplnit adresu';
+        this.alert_bar_shown = true;
+      }
+    },
+    hideAlert: function () {
+      this.alert_bar_shown = false;
+    }
+  },
+  watch: {
+    gdpr_accepted: function () {
+      if (this.gdpr_accepted) {
+        this.gdpr_shown = false;
+      } else {
+        this.gdpr_shown = true;
+      }
+    },
+    email_address: function () {
+      if (this.validEmail(this.email_address)) {
+        this.alert_bar_shown = false;
+      } else {
+        this.alert_message = 'Email není validní';
+        this.alert_bar_shown = true;
+      }
+    },
+    grant_address: function () {
+      if (this.grant_address) {
+        this.alert_bar_shown = false;
       }
     }
   }
@@ -326,9 +367,17 @@ export default {
     line-height: 24px;
     letter-spacing: 0.64px;
     text-align: center;
-    padding: 20px 22px;
     box-sizing: border-box;
-    border-bottom: 1px solid #fff;
+    height: 0;
+    padding: 0;
+    overflow: hidden;
+    transition: .3s;
+
+    &.is-shown {
+      height: auto;
+      padding: 20px 22px;
+      border-bottom: 1px solid #fff;
+    }
   }
 
   .get-grant-form-file--bottom {

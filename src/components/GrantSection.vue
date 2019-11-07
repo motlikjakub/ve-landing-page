@@ -221,9 +221,6 @@ export default {
         axios.post(APIendpoint + '/api/pvgis/vase-elektrarna', formData)
           .then(response => {
             fillData(response.data);
-            if (process.env.NODE_ENV === 'development') { //Only if development
-              console.log(response.data);
-            }
           })
           .catch(error => {
             if (process.env.NODE_ENV === 'development') { //Only if development
