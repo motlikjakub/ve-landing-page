@@ -114,6 +114,7 @@ export default {
   @import "~swiper/src/swiper";
   @import "../scss/global";
 
+  $slide-zoom-speed-mobile: 5s;
   $slide-zoom-speed: 10s;
   $slide-zoom-size: 1.15;
 
@@ -192,7 +193,11 @@ export default {
     top: 0;
     width: 100%;
     height: 100%;
-    transition: $slide-zoom-speed linear;
+    transition: $slide-zoom-speed-mobile linear;
+
+    @media only screen and (min-width: $screen-md) {
+      transition: $slide-zoom-speed linear;
+    }
   }
 
   .swiper-slide-inner {
