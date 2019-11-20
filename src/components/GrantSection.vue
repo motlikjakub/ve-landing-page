@@ -1,5 +1,5 @@
 <template>
-  <section class="grant-section">
+  <section class="grant-section" v-bind:class="{ 'not-filled': overlay }">
     <AlertBar v-bind:show="alert_bar_shown" :message="alert_message"/>
     <div class="grant-section-overlay" v-bind:class="{ 'is-active': overlay }">
       <div v-if="grant_address">
@@ -263,6 +263,7 @@ export default {
     padding-top: 55px;
     padding-bottom: 50px;
     box-sizing: border-box;
+    transition: .4s;
 
     @media only screen and (min-width: $screen-md) {
       padding-top: 70px;
@@ -273,6 +274,14 @@ export default {
       padding-top: 120px;
       padding-bottom: 100px;
 	  }
+
+    &.not-filled {
+      max-height: 100vh;
+
+      @media only screen and (min-width: $screen-md) {
+        max-height: 100%;
+      }
+    }
   }
 
   .grant-section-overlay {

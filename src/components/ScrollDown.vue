@@ -19,15 +19,20 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
+  @import "../scss/global";
 
   .icon-scroll-wrapper {
     position: absolute;
     left: 0;
-    bottom: 10px;
+    bottom: 50px;
     width: 100%;
     height: 40px;
     z-index: 2;
     text-align: center;
+
+    @media only screen and (min-width: 600px) {
+      bottom: 10px;
+    }
   }
 
   .icon-scroll,

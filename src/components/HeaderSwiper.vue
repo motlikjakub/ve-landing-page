@@ -210,7 +210,7 @@ export default {
     line-height: 1.15;
     letter-spacing: 1.8px;
     text-align: center;
-    margin-bottom: 85px;
+    margin-bottom: 45px;
     padding: 0 20px;
 
     @media only screen and (min-width: $screen-md) {
