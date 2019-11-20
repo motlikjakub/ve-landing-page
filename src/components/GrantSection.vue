@@ -37,7 +37,7 @@
             <img class="grant-detail__nzu" src="../assets/nzu.png" alt="Nová Zelená Úsporám">
           </div>
           <div class="grant-detail__row">
-            <h1 class="grant-detail__heading">Dotační titul NZÚ C.3.4.</h1>
+            <h1 class="grant-detail__heading">Dotační titul NZÚ C.3.5.</h1>
             <p class="grant-detail__description">6 panelů, Lithiová baterie 2,25 kWh</p>
           </div>
           <div class="grant-detail__row">
@@ -69,7 +69,7 @@
             <img class="grant-detail__nzu" src="../assets/nzu.png" alt="Nová Zelená Úsporám">
           </div>
           <div class="grant-detail__row">
-            <h1 class="grant-detail__heading">Dotační titul NZÚ C.3.5.</h1>
+            <h1 class="grant-detail__heading">Dotační titul NZÚ C.3.6.</h1>
             <p class="grant-detail__description">10 panelů, Lithiová baterie 3,50 kWh</p>
           </div>
           <div class="grant-detail__row">
@@ -100,7 +100,7 @@
             <img class="grant-detail__nzu" src="../assets/nzu.png" alt="Nová Zelená Úsporám">
           </div>
           <div class="grant-detail__row">
-            <h1 class="grant-detail__heading">Dotační titul NZÚ C.3.6.</h1>
+            <h1 class="grant-detail__heading">Dotační titul NZÚ C.3.7.</h1>
             <p class="grant-detail__description">14 panelů, Lithiová baterie 5,72 kWh</p>
           </div>
           <div class="grant-detail__row">
@@ -123,7 +123,7 @@
                 :value="largestGrantEcoSavings"
                 :formatValue="formatNumber"
                 :duration="500"
-              /> kWh</p>
+              /> kg</p>
           </div>
         </article>
       </div>
@@ -175,7 +175,7 @@ export default {
       VueScrollTo.scrollTo(link)
     },
     formatNumber: function (number) {
-      return number.toLocaleString('it-IT');
+      return Math.round(number).toLocaleString('it-IT');
     },
     handleGrantData: function (address) {
       let selfThis = this;
