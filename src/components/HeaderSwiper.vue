@@ -115,8 +115,8 @@ export default {
   @import "../scss/global";
 
   $slide-zoom-speed-mobile: 5s;
-  $slide-zoom-speed: 5s;
-  $slide-zoom-size: 1.15;
+  $slide-zoom-speed: 8s;
+  $slide-zoom-size: 1.2;
 
   @mixin slide-background {
     background-color: #ccc;
