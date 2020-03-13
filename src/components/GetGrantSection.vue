@@ -33,7 +33,7 @@
             <textarea class="get-grant-form__input get-grant-form__input--textarea" id="get-grant-text" v-model="note"></textarea>
             <div class="get-grant-form-file">
               <input class="get-grant-form-file__input" id="get-grant-file" type="file" accept="image/*,.pdf" ref="invoice_file" @change="invoiceSelected">
-              <div class="get-grant-form-file--top" :class="{ 'is-shown': invoice_select_text }" v-html="invoice_select_text"></div>
+              <!-- <div class="get-grant-form-file--top" :class="{ 'is-shown': invoice_select_text }" v-html="invoice_select_text"></div>
               <div class="get-grant-form-file--bottom">
                 <div class="get-grant-form-file__half">
                   <label class="get-grant-form-file__label" for="get-grant-file">Roční vyúčtovací faktura <br>za elektrickou energii</label>
@@ -44,7 +44,7 @@
                     <span v-else>Nahrát soubor</span>
                   </div>
                 </div>
-              </div>
+              </div> -->
             </div>
           </div>
         </div>
