@@ -1,1 +1,1 @@
-export const APIendpoint = 'https://vesolar.adwell.cz';
+export const APIendpoint = 'https://vesolar.adwell.cz'

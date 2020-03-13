@@ -71,8 +71,8 @@ export default {
     passAddress: function () {
       if (this.typed_address) {
         if (this.gdpr_accepted) {
-          this.allow_scroll = true;
-          this.grant_address = document.getElementById('address-input-address').value;
+          this.allow_scroll = true
+          this.grant_address = document.getElementById('address-input-address').value
           this.address_data = {
             'whole': document.getElementById('address-input-address').value,
             'code': document.getElementById('address-input-code').value,
@@ -85,36 +85,36 @@ export default {
             'region': document.getElementById('address-input-region').value,
             'country': document.getElementById('address-input-country').value,
             'street': document.getElementById('address-input-street').value,
-            'cityPart': document.getElementById('address-input-cityPart').value,
-          };
+            'cityPart': document.getElementById('address-input-cityPart').value
+          }
         } else {
-          this.gdpr_shown = true;
+          this.gdpr_shown = true
         }
       } else {
-        this.alert_bar_shown = true;
+        this.alert_bar_shown = true
       }
     },
     addressChanged: function () {
       if (document.getElementById('address-input-address').value) {
-        this.typed_address = true;
+        this.typed_address = true
       } else {
-        this.typed_address = false;
+        this.typed_address = false
       }
     }
   },
   watch: {
     typed_address: function () {
       if (this.typed_address) {
-        this.alert_bar_shown = false;
+        this.alert_bar_shown = false
       } else {
-        this.alert_bar_shown = true;
+        this.alert_bar_shown = true
       }
     },
     gdpr_accepted: function () {
       if (this.gdpr_accepted) {
-        this.gdpr_shown = false;
+        this.gdpr_shown = false
       } else {
-        this.gdpr_shown = true;
+        this.gdpr_shown = true
       }
     }
   }

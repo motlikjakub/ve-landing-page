@@ -86,7 +86,7 @@ export default {
       invoice_selected: false,
       invoice_select_text: '',
       alert_bar_shown: false,
-      alert_message: 'Pro tuto adresu již evidujeme dotaz na výši dotace',
+      alert_message: 'Pro tuto adresu již evidujeme dotaz na výši dotace'
     }
   },
   methods: {
@@ -95,45 +95,45 @@ export default {
     },
     invoiceSelected: function () {
       if (this.$refs.invoice_file.files[0]) {
-        this.invoice_selected = true;
-        this.invoice_select_text = 'Soubor <span style="font-weight: 400">' + this.$refs.invoice_file.files[0].name + '</span> nahrán';
+        this.invoice_selected = true
+        this.invoice_select_text = 'Soubor <span style="font-weight: 400">' + this.$refs.invoice_file.files[0].name + '</span> nahrán'
       } else {
-        this.invoice_selected = false;
-        this.invoice_select_text = 'Nahrajete-li soubor, Váš dotaz bude přesnější. <br>Pokud ne, nevadí, můžete pokračovat dále v odeslání.';
+        this.invoice_selected = false
+        this.invoice_select_text = 'Nahrajete-li soubor, Váš dotaz bude přesnější. <br>Pokud ne, nevadí, můžete pokračovat dále v odeslání.'
       }
     },
     validEmail: function (email) {
-      var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-      return re.test(email);
+      var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+      return re.test(email)
     },
     submitForm: function () {
       if (this.grant_address) {
         if (this.validEmail(this.email_address)) {
           if (this.gdpr_accepted) {
-            let addressFormData = this.address_data;
+            let addressFormData = this.address_data
 
-            const formData = new FormData();
-            formData.append('address[code]', addressFormData['code']);
-            formData.append('address[latitude]', addressFormData.latitude);
-            formData.append('address[longitude]', addressFormData.longitude);
-            formData.append('address[buildingNumber]', addressFormData.buildingNumber);
-            formData.append('address[city]', addressFormData.city);
-            formData.append('address[zipCode]', addressFormData.zipCode);
-            formData.append('address[district]', addressFormData.district);
-            formData.append('address[region]', addressFormData.region);
-            formData.append('address[country]', addressFormData.country);
-            formData.append('address[street]', addressFormData.street);
-            formData.append('address[cityPart]', addressFormData.cityPart);
+            const formData = new FormData()
+            formData.append('address[code]', addressFormData['code'])
+            formData.append('address[latitude]', addressFormData.latitude)
+            formData.append('address[longitude]', addressFormData.longitude)
+            formData.append('address[buildingNumber]', addressFormData.buildingNumber)
+            formData.append('address[city]', addressFormData.city)
+            formData.append('address[zipCode]', addressFormData.zipCode)
+            formData.append('address[district]', addressFormData.district)
+            formData.append('address[region]', addressFormData.region)
+            formData.append('address[country]', addressFormData.country)
+            formData.append('address[street]', addressFormData.street)
+            formData.append('address[cityPart]', addressFormData.cityPart)
 
-            formData.append('email', this.email_address);
-            formData.append('note', this.note);
+            formData.append('email', this.email_address)
+            formData.append('note', this.note)
 
-            let inputFiles = document.querySelector('#get-grant-file');
-            formData.append('invoice', inputFiles.files[0]);
+            let inputFiles = document.querySelector('#get-grant-file')
+            formData.append('invoice', inputFiles.files[0])
 
             if (inputFiles.files[0] || this.invoice_select_text) {
-              this.alert_message = 'Probíhá odesílání dat...';
-              this.alert_bar_shown = true;
+              this.alert_message = 'Probíhá odesílání dat...'
+              this.alert_bar_shown = true
 
               axios.post(APIendpoint + '/api/vase-elektrarna/submit-offer', formData, {
                 headers: {
@@ -141,59 +141,59 @@ export default {
                 }
               })
                 .then(response => {
-                  this.alert_message = 'Data byla úspěšně odeslána';
-                  this.alert_bar_shown = true;
+                  this.alert_message = 'Data byla úspěšně odeslána'
+                  this.alert_bar_shown = true
                 })
                 .catch(error => {
-                  if (process.env.NODE_ENV === 'development') { //Only if development
-                    console.log(error);
+                  if (process.env.NODE_ENV === 'development') { // Only if development
+                    console.log(error)
                   }
                   if (error.response.status === 409) {
-                    this.alert_message = 'Pro tuto adresu již evidujeme dotaz na výši dotace';
-                    this.alert_bar_shown = true;
+                    this.alert_message = 'Pro tuto adresu již evidujeme dotaz na výši dotace'
+                    this.alert_bar_shown = true
                   } else {
-                    this.alert_message = 'Při odesílání dat na server nastala chyba, zkuste to znovu později';
-                    this.alert_bar_shown = true;
+                    this.alert_message = 'Při odesílání dat na server nastala chyba, zkuste to znovu později'
+                    this.alert_bar_shown = true
                   }
                 })
             } else {
-              this.invoice_select_text = 'Nahrajete-li soubor, Váš dotaz bude přesnější. <br>Pokud ne, nevadí, můžete pokračovat dále v odeslání.';
+              this.invoice_select_text = 'Nahrajete-li soubor, Váš dotaz bude přesnější. <br>Pokud ne, nevadí, můžete pokračovat dále v odeslání.'
             }
           } else {
-            this.gdpr_shown = true;
+            this.gdpr_shown = true
           }
         } else {
-          this.alert_message = 'Email není validní';
-          this.alert_bar_shown = true;
+          this.alert_message = 'Email není validní'
+          this.alert_bar_shown = true
         }
       } else {
-        this.alert_message = 'Je nutné vyplnit adresu';
-        this.alert_bar_shown = true;
+        this.alert_message = 'Je nutné vyplnit adresu'
+        this.alert_bar_shown = true
       }
     },
     hideAlert: function () {
-      this.alert_bar_shown = false;
+      this.alert_bar_shown = false
     }
   },
   watch: {
     gdpr_accepted: function () {
       if (this.gdpr_accepted) {
-        this.gdpr_shown = false;
+        this.gdpr_shown = false
       } else {
-        this.gdpr_shown = true;
+        this.gdpr_shown = true
       }
     },
     email_address: function () {
       if (this.validEmail(this.email_address)) {
-        this.alert_bar_shown = false;
+        this.alert_bar_shown = false
       } else {
-        this.alert_message = 'Email není validní';
-        this.alert_bar_shown = true;
+        this.alert_message = 'Email není validní'
+        this.alert_bar_shown = true
       }
     },
     grant_address: function () {
       if (this.grant_address) {
-        this.alert_bar_shown = false;
+        this.alert_bar_shown = false
       }
     }
   }

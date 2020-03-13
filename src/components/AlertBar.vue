@@ -17,11 +17,11 @@ export default {
   name: 'AlertBar',
   props: {
     show: Boolean,
-    message: String,
+    message: String
   },
   methods: {
-    accept: function() {
-      this.$parent.alert_bar_shown = false;
+    accept: function () {
+      this.$parent.alert_bar_shown = false
     }
   }
 }

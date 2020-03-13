@@ -16,11 +16,11 @@
 export default {
   name: 'GDPRconsent',
   props: {
-    show: Boolean,
+    show: Boolean
   },
   methods: {
-    accept: function() {
-      this.$parent.gdpr_shown = false;
+    accept: function () {
+      this.$parent.gdpr_shown = false
     }
   }
 }

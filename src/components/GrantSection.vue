@@ -175,21 +175,21 @@ export default {
       VueScrollTo.scrollTo(link)
     },
     formatNumber: function (number) {
-      return Math.round(number).toLocaleString('it-IT');
+      return Math.round(number).toLocaleString('it-IT')
     },
     handleGrantData: function (address) {
-      let selfThis = this;
-      selfThis.overlay = true;
+      let selfThis = this
+      selfThis.overlay = true
 
-      document.getElementById('mapa').innerHTML = '';
-      var coords;
+      document.getElementById('mapa').innerHTML = ''
+      var coords
 
-      new SMap.Geocoder(address, odpoved);
+      new SMap.Geocoder(address, odpoved)
 
       function odpoved (geocoder) { /* Odpověď */
         if (!geocoder.getResults()[0].results.length) {
-          selfThis.alert_message = 'Tuto adresu bohužel neznáme, pro více informací nás kontaktujte';
-          selfThis.alert_bar_shown = true;
+          selfThis.alert_message = 'Tuto adresu bohužel neznáme, pro více informací nás kontaktujte'
+          selfThis.alert_bar_shown = true
           return
         }
 
@@ -213,32 +213,31 @@ export default {
       }
 
       function loadGrantData (coords) {
-
-        const formData = new FormData();
-        formData.append('latitude', coords.y);
-        formData.append('longitude', coords.x);
+        const formData = new FormData()
+        formData.append('latitude', coords.y)
+        formData.append('longitude', coords.x)
 
         axios.post(APIendpoint + '/api/pvgis/vase-elektrarna', formData)
           .then(response => {
-            fillData(response.data);
+            fillData(response.data)
           })
           .catch(error => {
-            if (process.env.NODE_ENV === 'development') { //Only if development
-              console.log(error);
+            if (process.env.NODE_ENV === 'development') { // Only if development
+              console.log(error)
             }
-            selfThis.alert_message = 'Při získávání dat ze serveru nastala chyba, zkuste to znovu později';
-            selfThis.alert_bar_shown = true;
+            selfThis.alert_message = 'Při získávání dat ze serveru nastala chyba, zkuste to znovu později'
+            selfThis.alert_bar_shown = true
           })
       }
 
       function fillData (data) {
-        selfThis.smallestGrantProduction = data[0]['production'];
-        selfThis.smallestGrantEcoSavings = data[0]['eco-savings'];
-        selfThis.mediumGrantProduction = data[1]['production'];
-        selfThis.mediumGrantEcoSavings = data[1]['eco-savings'];
-        selfThis.largestGrantProduction = data[2]['production'];
-        selfThis.largestGrantEcoSavings = data[2]['eco-savings'];
-        selfThis.overlay = false;
+        selfThis.smallestGrantProduction = data[0]['production']
+        selfThis.smallestGrantEcoSavings = data[0]['eco-savings']
+        selfThis.mediumGrantProduction = data[1]['production']
+        selfThis.mediumGrantEcoSavings = data[1]['eco-savings']
+        selfThis.largestGrantProduction = data[2]['production']
+        selfThis.largestGrantEcoSavings = data[2]['eco-savings']
+        selfThis.overlay = false
       }
     }
   },

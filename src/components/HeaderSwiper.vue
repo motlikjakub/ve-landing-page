@@ -65,7 +65,7 @@
 </template>
 
 <script>
-import Swiper from 'swiper/dist/js/swiper.esm.bundle'
+import Swiper from 'swiper/js/swiper'
 import Button from './Button'
 import ScrollDown from './ScrollDown'
 
@@ -82,7 +82,7 @@ export default {
     }
   },
   mounted () {
-    let scrolled = false;
+    let scrolled = false
 
     const swiper = new Swiper('.swiper-container', {
       speed: 1000,
@@ -92,19 +92,19 @@ export default {
       pagination: {
         el: '.swiper-pagination',
         clickable: true
-      },
-    });
+      }
+    })
     swiper.on('reachEnd', function () {
       if (!scrolled) {
-        setTimeout(function(){
-          VueScrollTo.scrollTo('#address');
-        }, 5000);
+        setTimeout(function () {
+          VueScrollTo.scrollTo('#address')
+        }, 5000)
       }
-    });
+    })
 
-    window.addEventListener('scroll', function() {
-      scrolled = true;
-    });
+    window.addEventListener('scroll', function () {
+      scrolled = true
+    })
   }
 }
 </script>
@@ -115,7 +115,7 @@ export default {
   @import "../scss/global";
 
   $slide-zoom-speed-mobile: 5s;
-  $slide-zoom-speed: 10s;
+  $slide-zoom-speed: 5s;
   $slide-zoom-size: 1.15;
 
   @mixin slide-background {

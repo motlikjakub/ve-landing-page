@@ -15,7 +15,7 @@ export default {
     classNames: String,
     allow_scroll: {
       type: Boolean,
-      default: true,
+      default: true
     }
   },
   methods: {
