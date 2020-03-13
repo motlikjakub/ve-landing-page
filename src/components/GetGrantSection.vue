@@ -131,7 +131,7 @@ export default {
             let inputFiles = document.querySelector('#get-grant-file')
             formData.append('invoice', inputFiles.files[0])
 
-            if (inputFiles.files[0] || this.invoice_select_text) {
+            if ((inputFiles.files[0] || this.invoice_select_text) && true /* Delete this if using invoice upload */) {
               this.alert_message = 'Probíhá odesílání dat...'
               this.alert_bar_shown = true
 
