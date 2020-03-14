@@ -31,6 +31,7 @@
 
         </div>
       </div>
+      <ProductionChart :productionData=productionData />
       <div class="grant-details">
         <article class="grant-detail">
           <div>
@@ -140,6 +141,7 @@ import axios from 'axios'
 import AnimatedNumber from 'animated-number-vue'
 import AlertBar from './AlertBar'
 import { APIendpoint } from '../variables.js'
+import ProductionChart from './ProductionChart'
 let VueScrollTo = require('vue-scrollto')
 
 export default {
@@ -147,7 +149,8 @@ export default {
   components: {
     AlertBar,
     Button,
-    AnimatedNumber
+    AnimatedNumber,
+    ProductionChart
   },
   data () {
     return {
@@ -159,7 +162,8 @@ export default {
       largestGrantEcoSavings: 0,
       overlay: true,
       alert_bar_shown: false,
-      alert_message: 'Pozor'
+      alert_message: 'Pozor',
+      productionData: []
     }
   },
   props: {
@@ -276,6 +280,7 @@ export default {
 
     &.not-filled {
       max-height: 100vh;
+      overflow-y: hidden;
 
       @media only screen and (min-width: $screen-md) {
         max-height: 100%;
