@@ -74,11 +74,11 @@
           </div>
           <div class="grant-detail__row">
             <h2 class="grant-detail__heading">Dotace</h2>
-            <p class="grant-detail__content">105.000 Kč</p>
+            <p class="grant-detail__content darker">105.000 Kč</p>
           </div>
           <div class="grant-detail__row">
             <h2 class="grant-detail__heading">Roční výroba a úspora</h2>
-            <p class="grant-detail__content">
+            <p class="grant-detail__content darker">
               <animated-number
                 :value="mediumGrantProduction"
                 :formatValue="formatNumber"
@@ -87,7 +87,7 @@
           </div>
           <div class="grant-detail__row">
             <h2 class="grant-detail__heading">Úspora CO<sub>2</sub></h2>
-            <p class="grant-detail__content">
+            <p class="grant-detail__content darker">
               <animated-number
                 :value="mediumGrantEcoSavings"
                 :formatValue="formatNumber"
@@ -105,11 +105,11 @@
           </div>
           <div class="grant-detail__row">
             <h2 class="grant-detail__heading">Dotace</h2>
-            <p class="grant-detail__content">155.000 Kč</p>
+            <p class="grant-detail__content darkest">155.000 Kč</p>
           </div>
           <div class="grant-detail__row">
             <h2 class="grant-detail__heading">Roční výroba a úspora</h2>
-            <p class="grant-detail__content">
+            <p class="grant-detail__content darkest">
               <animated-number
                 :value="largestGrantProduction"
                 :formatValue="formatNumber"
@@ -118,7 +118,7 @@
           </div>
           <div class="grant-detail__row">
             <h2 class="grant-detail__heading">Úspora CO<sub>2</sub></h2>
-            <p class="grant-detail__content">
+            <p class="grant-detail__content darkest">
               <animated-number
                 :value="largestGrantEcoSavings"
                 :formatValue="formatNumber"
@@ -495,6 +495,14 @@ export default {
     font-weight: 700;
     letter-spacing: 0.56px;
     line-height: 40px;
+
+    &.darker {
+      color: $greenish-darker;
+    }
+
+    &.darkest {
+      color: $greenish-darkest;
+    }
 
     @media only screen and (min-width: $screen-md) {
       margin-top: 10px;
