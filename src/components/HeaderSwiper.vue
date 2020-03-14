@@ -2,10 +2,10 @@
   <section class="header-swiper">
     <!-- Slider main container -->
     <div class="swiper-container">
-      <!-- Additional required wrapper -->
-      <div class="swiper-wrapper">
-        <!-- Slides -->
-        <div class="swiper-slide slide-1">
+        <!-- Additional required wrapper -->
+        <div class="swiper-wrapper">
+            <!-- Slides -->
+            <div class="swiper-slide slide-1">
           <div class="swiper-slide-bcg"></div>
           <div class="swiper-slide-inner">
             <div class="swiper-slide-text">
@@ -53,19 +53,16 @@
           </div>
           </div>
         </div>
-      </div>
-      <!-- If we need pagination -->
-      <div class="swiper-pagination"></div>
-
-      <!-- If we need scrollbar -->
-      <div class="swiper-scrollbar"></div>
+        </div>
+        <!-- If we need pagination -->
+        <div class="swiper-pagination"></div>
     </div>
     <ScrollDown/>
   </section>
 </template>
 
 <script>
-import Swiper from 'swiper/js/swiper'
+import Swiper from 'swiper/js/swiper.esm.bundle'
 import Button from './Button'
 import ScrollDown from './ScrollDown'
 
@@ -89,6 +86,10 @@ export default {
       autoplay: {
         delay: 5000
       },
+      // effect: 'fade',
+      // fadeEffect: {
+      //   crossFade: true
+      // },
       pagination: {
         el: '.swiper-pagination',
         clickable: true
@@ -218,16 +219,16 @@ export default {
     margin-bottom: 45px;
     padding: 0 20px;
 
-    @media only screen and (min-width: $screen-md) {
-      padding: 0 40px;
-      font-size: 60px;
-      margin-bottom: 85px;
-	  }
+      @media only screen and (min-width: $screen-md) {
+        padding: 0 40px;
+        font-size: 60px;
+        margin-bottom: 85px;
+      }
 
-    @media only screen and (min-width: $screen-lg) {
-      font-size: 90px;
-      margin-bottom: 110px;
-	  }
+      @media only screen and (min-width: $screen-lg) {
+        font-size: 90px;
+        margin-bottom: 110px;
+      }
   }
 
   .swiper-slide-button {
@@ -237,14 +238,14 @@ export default {
   .swiper-pagination {
     display: none;
 
-    @media only screen and (min-width: $screen-md) {
-      display: block;
-      position: absolute;
-      z-index: 3;
-      right: 0;
-      top: 50%;
-      margin-top: -50px;
-	  }
+      @media only screen and (min-width: $screen-md) {
+        display: block;
+        position: absolute;
+        z-index: 3;
+        right: 0;
+        top: 50%;
+        margin-top: -50px;
+      }
   }
 
 </style>
