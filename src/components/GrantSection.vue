@@ -236,11 +236,16 @@ export default {
 
       function fillData (data) {
         selfThis.smallestGrantProduction = data[0]['production']
-        selfThis.smallestGrantEcoSavings = data[0]['eco-savings']
+        selfThis.smallestGrantEcoSavings = data[0]['eco_savings']
         selfThis.mediumGrantProduction = data[1]['production']
-        selfThis.mediumGrantEcoSavings = data[1]['eco-savings']
+        selfThis.mediumGrantEcoSavings = data[1]['eco_savings']
         selfThis.largestGrantProduction = data[2]['production']
-        selfThis.largestGrantEcoSavings = data[2]['eco-savings']
+        selfThis.largestGrantEcoSavings = data[2]['eco_savings']
+        selfThis.productionData = [
+          data[0]['electricity_production']['monthly_productions'],
+          data[1]['electricity_production']['monthly_productions'],
+          data[2]['electricity_production']['monthly_productions']
+        ]
         selfThis.overlay = false
       }
     }
