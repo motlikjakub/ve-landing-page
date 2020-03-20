@@ -11,10 +11,10 @@
         </h1>
         <form class="address-form container">
           <div class="address-form__row">
-            <label for="address-input-address" class="address-form-input-label">Ulice a město</label>
+            <label for="address-input-address" class="address-form-input-label">Ulice, čp, město</label>
           </div>
           <div class="address-form__row">
-            <input id="address-input-address" class="address-form-input smartform-whole-address" type="text" placeholder="Ulice a město" @focusout="addressChanged">
+            <input id="address-input-address" class="address-form-input smartform-whole-address" type="text" placeholder="Ulice, čp, město" @focusout="addressChanged">
             <Button link="#grant" classNames="checkbox-required" :allow_scroll="allow_scroll" text="Spočítat" @click.native="passAddress"/>
             <input id="address-input-code" type="hidden" class="smartform-field-CODE">
             <input id="address-input-latitude" type="hidden" class="smartform-field-GPS_LAT">

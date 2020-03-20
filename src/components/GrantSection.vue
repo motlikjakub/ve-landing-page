@@ -16,7 +16,7 @@
       </div>
     </div>
     <div class="grant-section-container container" v-bind:class="{ 'is-active': overlay }">
-      <h2 class="grant-heading">Vaše lokace, kde můžete získat dotaci</h2>
+      <h2 class="grant-heading">Úspory a dotace přímo pro Váš dům</h2>
       <div class="grant-address-map" id="grant"> <!-- Offseted on clients wish -->
         <div class="grant-address-map__half grant-address">
           <div class="grant-address-heading">
