@@ -19,7 +19,8 @@
             <input id="address-input-code" type="hidden" class="smartform-field-CODE">
             <input id="address-input-latitude" type="hidden" class="smartform-field-GPS_LAT">
             <input id="address-input-longitude" type="hidden" class="smartform-field-GPS_LONG">
-            <input id="address-input-buildingNumber" type="hidden" class="smartform-field-NUMBER_WHOLE">
+            <input id="address-input-houseNumber" type="hidden" class="smartform-field-NUMBER_POPISNE">
+            <input id="address-input-orientationNumber" type="hidden" class="smartform-field-NUMBER_ORIENTACNI">
             <input id="address-input-city" type="hidden" class="smartform-field-CITY">
             <input id="address-input-zipCode" type="hidden" class="smartform-field-ZIP">
             <input id="address-input-district" type="hidden" class="smartform-field-DISTRICT">
@@ -78,7 +79,8 @@ export default {
             'code': document.getElementById('address-input-code').value,
             'latitude': document.getElementById('address-input-latitude').value,
             'longitude': document.getElementById('address-input-longitude').value,
-            'buildingNumber': document.getElementById('address-input-buildingNumber').value,
+            'houseNumber': document.getElementById('address-input-houseNumber').value,
+            'orientationNumber': document.getElementById('address-input-orientationNumber').value,
             'city': document.getElementById('address-input-city').value,
             'zipCode': document.getElementById('address-input-zipCode').value,
             'district': document.getElementById('address-input-district').value,
